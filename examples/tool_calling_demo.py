@@ -2,16 +2,22 @@
 from src.core.xai_client import create_chat
 from xai_sdk.tools import tool
 
-@toolchat.append({"role": "user", "content": "Explain closed-loop homestead in 2 sentences."})def get_chp_metrics(power: float, fuel: str = "propane") -> dict:
+@tool
+def get_chp_metrics(power: float, fuel: str = "propane") -> dict:
     """Get CHP performance metrics"""
     from src.tools.energy import chp_efficiency_calc
     return chp_efficiency_calc(power, fuel)
 
-chat.append({"role": "user", "content": "What are realistic CHP metrics for a 8kW propane system?"})chat.register_tools([get_chp_metrics])
+# Create chat instance (assuming create_chat returns a chat object with append/sample)
+chat = create_chat()
 
-chat.append(user("What are realistic CHP metrics for a 8 kW propane system?"))
+# Register tool
+chat.register_tools([get_chp_metrics])
+
+# Add user message - fixed format
+chat.append({"role": "user", "content": "What are realistic CHP metrics for a 8kW propane system?"})
+
 response = chat.sample()
-
 print("Response:", response.content)
 
 if response.tool_calls:
