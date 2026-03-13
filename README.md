@@ -1,3 +1,14 @@
+# EcoForge 🌱⚒️🪐
+**Grok-native closed-loop regenerative homesteads** for Earth abundance + Mars readiness.
+
+95–98% nutrient/water/energy recycle  
+50–100+ real chaos sensor streams (pH, DO, NH₃, IMU, vision) feeding Grok for embodied AI  
+Antifragile 7-loop cascade with stress-triggered bypasses
+
+Current status: Digital/sim phase – full blueprint audited March 13 2026  
+Next: Pellet baselines → 90-day Mars runs → Homestead 0.1 prototype
+
+See `docs/seven-loops.md` and `docs/vermicomposting-biochar.md`
 # EcoForge – AI-Powered Regenerative Homesteads ⚒️🌱🪐♾️
 
 Open-source framework for closed-loop, sensor-grounded abundance systems.  
