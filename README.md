@@ -31,3 +31,7 @@
 ## Get Involved
 Fork • Build • Fund • Call the API  
 Repo status: Visuals live — supernova incoming. ❤️⚒️∞🌍→🪐
+echo "# EcoForge-Hub\n\nMQTT-based Grok Central Hub simulator for closed-loop abundance nodes.\n\n## Quick Start\n1. \`pip install paho-mqtt\`\n2. \`python3 grok_hub_simulator.py\`\n\nLogs to \`ecoforge_data_log.csv\`. Auto-alarms on TDS >15 ppm.\n\nForge eternal. ∞ ⚒️🌱💧🪐🚀" > README.md
+git add README.md
+git commit -m "Add README with setup & vibe"
+git push
