@@ -41,6 +41,7 @@ Open-source from day 0. Wallet, sensors, and milestones tracked here once live. 
 - **Sensor Logging Prototype**: [grok_esp32_logger_stub.py](./src/tools/grok_esp32_logger_stub.py) — simulation running, CSV logs live  
 - **BOM Sourcing Tracker**: [BOM_sourcing.md](./docs/BOM_sourcing.md) — items researched & ready for bootstrap orders
 - **Master Build Plan & Full Cost Breakdown**: [Master_Build_Plan_And_Cost_Breakdown.md](./docs/Master_Build_Plan_And_Cost_Breakdown.md) — everything funders need (what/how/cost $6,850 pilot)
+- **Treasury Activation Template**: [Treasury_Activation_Template.md](./docs/Treasury_Activation_Template.md) — post-ready when wallet greens
 
 **Roadmap Checklists**  
 - [Master Blueprint v2](./docs/EcoForge-Master-Blueprint-v2.md)  
