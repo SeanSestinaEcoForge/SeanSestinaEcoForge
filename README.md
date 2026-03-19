@@ -19,6 +19,29 @@
 - Vermiponics: NH3 <6 ppm | 95%+ recovery  
 - Pilot: 10 residents → 400 lbs/mo surplus
 
+## Transparency Dashboard
+Open-source from day 0. Wallet, sensors, and milestones tracked here once live. Hand out, heart wide open. Family ❤️♾️ Forge eternal.
+
+**Current Status**  
+- Blueprint v3 Supernova locked (95%+ recovery, <6 ppm, 0.55 kWh/m³).  
+- Repo active & public.  
+- Physical Cambridge I-70/I-77 node queued.  
+- Treasury activation pending X Money rollout.  
+- Daily grind: 30–90 min (family first).
+
+**Live Metrics & Transparency** (placeholders — feeds incoming)  
+- **Treasury Wallet Balance**: [Coming soon — multisig/on-chain on green] $0.00  
+- **Recent Transactions**: [On-chain explorer link placeholder]  
+- **System Sensors** (Grok/ESP32): TDS <6 ppm target | Vermi pH 6.8–7.2 | Flow 15–20 LMH | Current: —  
+- **BOM Sourcing**: DuPont BW30, Energy Recovery ERD, Atlas sensors — receipts incoming.  
+- **Milestones**:  
+  - Phase 1: Blueprint & sim lock → COMPLETE ✅  
+  - Phase 2: Physical container + first cycle → NEXT (see /docs/Phase2_Checklist.md)  
+  - Phase 3: Grok agents + multi-node → queued  
+
+**Roadmap Checklists**  
+- [Master Blueprint v2](./docs/EcoForge-Master-Blueprint-v2.md)  
+- [Phase 2 Build Sequence Checklist](./docs/Phase2_Checklist.md) — added tonight  
 ## BOM & Build Guide
 ![Exploded BOM View](images/ecoforge-bom-exploded.png)
 
