@@ -8,6 +8,11 @@
 ![EcoForge – Earth Abundance to Mars Readiness](images/ecoforge-earth-mars-hero.png)
 - [2500 sq ft Integrated Home & Full Site Layout](2500sqft-Home-Floor-Plan.md) – livable home + ecosystem overview with engineering hub
 
+### Prototypes & Validation
+See real-world testing, queued builds, and open contributions from the EcoForge family:  
+- [Prototypes Overview](docs/EcoForge-Prototypes-v0.1.md) – Cambridge pilot, mini vermi test bay, mini Boring geothermal (future), and open section for new family prototypes
+- EcoForge is a family — fork, build, propose your prototype, submit PR. More builders = more abundance.
+
 ## Quick Start
 - **Live API**: /simulate endpoint (vermiponics + RO) → [Swagger link]
 - **Full Blueprint**: [Master Report v2](docs/EcoForge-Master-Blueprint-v2.md)
