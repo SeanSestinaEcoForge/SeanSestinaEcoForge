@@ -25,7 +25,7 @@ Vermiponics + biogas spine + RO + Grok reasoning/voice agents (**Ara** default) 
 - Blueprint v3 "Supernova" locked: 95–96.5% resource recovery, NH₃ <6 ppm, RO 0.55 kWh/m³, 18.8 LMH flux.  
 - API: FastAPI /simulate endpoint (vermiponic + RO ODEs) – live but throttled.  
 - Grok Integration: In progress – API key ready, testing reasoning for sim tuning + realtime voice agents (**Ara** voice locked for warm, conversational agents). Awaiting credits top-up for heavy usage.
-- [Grok-Ara-Integration-Plan.md](/docs/Grok-Ara-Integration-Plan.md
+- [Grok-Ara-Integration-Plan.md](/docs/Grok-Ara-Integration-Plan.md)
 - Physical Build: Container 1 prototype queued (Cambridge I-70/I-77 node) – awaiting site confirmation from Dad/Danny.  
 - Team: Core push with Danny (build experience), Bridget (reviewing repo/sims), Sean leading. Open for aligned contributors!  
 - Treasury: Activation pending (X Money/multisig) – $0 current.  
