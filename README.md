@@ -37,8 +37,8 @@ Read the full LICENSE (MIT) and CONTRIBUTING.md for additional terms.
 ![EcoForge Container Cutaway](images/ecoforge-container-cutaway.png)  
 *Insulated shipping container prototype with vermiponics beds, biogas integration, RO unit, and energy storage layout*
 
-![EcoForge Process Flow](images/ecoforge-process-flow.png)  
-*Closed-loop nutrient & energy flow: Vermiponics → Biogas → RO → Powerwall hybrid (pH, NH₃, recovery, energy all monitored)*
+![EcoForge Closed-Loop Process Flow](images/ecoforge-process-flow.png)
+*Closed-loop nutrient, water & energy flow: Vermiponics → Biogas (anaerobic digestion) → Greywater Recycling → RO (permeate reuse) → Powerwall hybrid solar storage. All loops monitored live (pH, NH₃ <6 ppm, TDS, flux, recovery rate, energy surplus) via Grok/ESP32.*
 
 ![EcoForge Isometric Diagram](images/ecoforge-isometric-diagram.png)  
 *Isometric overview of the full homestead node system*
