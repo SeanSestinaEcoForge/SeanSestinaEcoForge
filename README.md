@@ -50,7 +50,7 @@ Read the full LICENSE (MIT) and CONTRIBUTING.md for additional terms.
 
 *Insulated shipping container prototype with vermiponics beds, biogas integration, RO unit, and energy storage layout*
 
-![Earth to Mars Roadmap](images/ecoforge-scaling-roadmap.png)
+![Scaling Roadmap](images/ecoforge-scaling-roadmap.png)
 
 *Roadmap for multi-node expansion, community rollout, and Mars analog scaling*
 
