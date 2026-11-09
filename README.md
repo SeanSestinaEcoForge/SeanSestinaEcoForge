@@ -140,7 +140,7 @@ One **40-ft high-cube** for fish + water treatment, with plant beds in a greenho
 - **Tesla Optimus** (IDEA): someday handle routine physical tasks — feeding checks, filter cleaning, water sampling, harvest help — once the robots are available to buy.
 - Same wiring as the Grok advisor: task requests go through the safety layer with `executed: false` until a human approves; no unattended actuation.
 - **Not available, not tested.** No partnership or affiliation with Tesla or xAI.
-- Longer-term Moon / Mars regenerative life-support analog: also **IDEA** (one-line vision, no schedule or claim).
+- **Moon / Mars** (IDEA): longer term, a test bed for future space life support.
 - Details: [docs/15_Grok_Optimus_Monitoring_Integration.md](docs/15_Grok_Optimus_Monitoring_Integration.md).
 
 ---
