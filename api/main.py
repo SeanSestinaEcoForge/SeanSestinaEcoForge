@@ -1,9 +1,10 @@
 """Garage Pilot v2 local-only planning API. Not a hardware controller."""
 from typing import Annotated, Literal
 import base64
+from pathlib import Path
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
 from .configuration import load_config, values
 from .nutrient_model import run_simulation, plot_png
@@ -208,3 +209,11 @@ def advisor_suggest(req: AdvisorRequest):
 @app.get('/advisor/limits')
 def advisor_limits():
     return safety_limits()
+
+# --- Dashboard (static page, no build step, no external assets) -------------------------
+
+DASHBOARD = Path(__file__).resolve().parent / 'static' / 'dashboard.html'
+
+@app.get('/dashboard', include_in_schema=False)
+def dashboard():
+    return FileResponse(DASHBOARD, media_type='text/html')

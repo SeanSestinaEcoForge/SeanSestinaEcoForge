@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EcoForge garage pilot — SIM dashboard</title>
+<!-- Single static page: plain HTML/JS, no build step, no external assets (works offline). -->
+<style>
+  :root { --bg:#0f1712; --card:#17231b; --ink:#e7efe9; --mute:#9fb3a6; --ok:#3fb27f; --warn:#e0a526; --bad:#e0524a; --line:#2a3a2f; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--ink); }
+  .banner { background:repeating-linear-gradient(45deg,#7a1f1a,#7a1f1a 14px,#8e2a22 14px,#8e2a22 28px); color:#fff; text-align:center; padding:12px 8px; font-weight:800; letter-spacing:.06em; font-size:20px; }
+  .banner small { display:block; font-weight:500; letter-spacing:0; font-size:13px; opacity:.95; }
+  header { display:flex; flex-wrap:wrap; gap:12px; align-items:baseline; justify-content:space-between; padding:14px 20px 4px; }
+  h1 { font-size:20px; margin:0; } h2 { font-size:15px; margin:0 0 8px; color:#cfe3d6; }
+  .mute { color:var(--mute); font-size:12px; }
+  main { display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:14px; padding:12px 20px 20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  .wide { grid-column:1 / -1; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:5px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--mute); font-weight:600; }
+  .badge { display:inline-block; padding:1px 8px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:.03em; }
+  .OK, .ALLOWED { background:#1d4a34; color:#8ff0bf; } .LATE, .CLAMPED { background:#5a4511; color:#ffd77a; }
+  .STALE, .BLOCKED { background:#5c1f1b; color:#ffaaa3; } .LABEL { background:#24364a; color:#a9d0ff; }
+  canvas { width:100%; height:150px; display:block; }
+  .charts { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .chart h3 { margin:0 0 2px; font-size:12px; color:var(--mute); font-weight:600; }
+  .controls { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:8px; font-size:13px; }
+  input[type=number] { width:64px; background:#0d140f; color:var(--ink); border:1px solid var(--line); border-radius:4px; padding:2px 4px; }
+  select { background:#0d140f; color:var(--ink); border:1px solid var(--line); border-radius:4px; }
+  .sugg { border-left:4px solid var(--line); padding:6px 10px; margin:6px 0; background:#121c15; border-radius:4px; }
+  .sugg.ALLOWED { border-color:var(--ok); } .sugg.CLAMPED { border-color:var(--warn); } .sugg.BLOCKED { border-color:var(--bad); }
+  .sugg .why { color:var(--mute); font-size:12px; }
+  .notice { background:#3b3212; border:1px solid #6b5a1c; padding:6px 10px; border-radius:6px; margin:6px 0; font-size:13px; }
+  a { color:#8fd3ff; }
+  @media (max-width: 900px) { .charts { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="banner">SIMULATION — NOT MEASURED DATA
+  <small>Fake sensor readings, a planning model and MOCK advisor rules. Advisory only: nothing here feeds, doses, switches or stops anything.</small>
+</div>
+<header>
+  <div><h1>EcoForge family garage pilot — demo dashboard</h1>
+    <div class="mute">Sensors → API → advisor → <b>human decides</b>. Labels: SIM = simulated, MOCK = canned advisor rules, ASSUME = assumption.</div></div>
+  <div class="mute" id="refreshed">loading…</div>
+</header>
+<main>
+  <section class="card wide">
+    <h2>Tank state over time <span class="badge LABEL" id="telemetryLabel">SIM</span></h2>
+    <div class="charts">
+      <div class="chart"><h3>pH (alarm band 6.5–7.5, QUOTED)</h3><canvas id="chart-pH"></canvas></div>
+      <div class="chart"><h3>Dissolved oxygen, mg/L (warn 5 / critical 4, QUOTED)</h3><canvas id="chart-DO"></canvas></div>
+      <div class="chart"><h3>Water temperature, °C (pilot range 18–24, ASSUME)</h3><canvas id="chart-temp"></canvas></div>
+    </div>
+    <div class="mute" id="historyNote"></div>
+  </section>
+
+  <section class="card">
+    <h2>Latest sensor heartbeats</h2>
+    <table><thead><tr><th>Sensor</th><th>Label</th><th>pH</th><th>DO</th><th>°C</th><th>Age</th><th>Heartbeat</th></tr></thead>
+      <tbody id="beats"><tr><td colspan="7" class="mute">No telemetry yet. Start <code>python tools/fake_sensor.py</code>.</td></tr></tbody></table>
+    <div class="mute" id="staleRule"></div>
+  </section>
+
+  <section class="card">
+    <h2>Advisor suggestions <span class="badge LABEL" id="advisorLabel">MOCK</span></h2>
+    <div class="controls">
+      <label>Mode <select id="mode"><option value="mock" selected>mock (default, no key)</option><option value="live">live (needs XAI_API_KEY on the server)</option></select></label>
+      <label>Current feed <input type="number" id="feed" value="5" min="0" max="100" step="0.5"> g/day (ASSUME)</label>
+      <label><input type="checkbox" id="demo" checked> include canned unsafe suggestions (safety-layer demo)</label>
+    </div>
+    <div id="advisorNotice"></div>
+    <div class="mute" id="advisorCounts"></div>
+    <div id="suggestions"></div>
+  </section>
+
+  <section class="card wide">
+    <h2>Planning model: dissolved nitrogen, 30 SIM days <span class="badge LABEL">SIM</span></h2>
+    <canvas id="chart-N" style="height:200px"></canvas>
+    <div class="mute">POST /simulate with pilot defaults (5 g/day fixed feed, 21 °C, not precycled). mg N/L. A planning model, not a forecast or operating approval.</div>
+  </section>
+</main>
+<footer class="mute" style="padding:0 20px 20px">API docs: <a href="/docs">/docs</a> · Advisor limits: <a href="/advisor/limits">/advisor/limits</a> · Latest telemetry: <a href="/telemetry/latest">/telemetry/latest</a> · Experimental educational software, not a control system.</footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const REFRESH_S = Math.max(1, Number(params.get('refresh')) || 5);
+const COLORS = ['#5cc8ff', '#ffb547', '#7ee081', '#ff7ab6'];
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v ?? '—').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = (v, d = 2) => (typeof v === 'number' ? v.toFixed(d) : '—');
+
+function drawChart(canvas, series, opts = {}) {
+  const dpr = window.devicePixelRatio || 1, w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  const g = canvas.getContext('2d'); g.scale(dpr, dpr); g.clearRect(0, 0, w, h);
+  const pad = {l: 40, r: 8, t: 8, b: 20};
+  series = series.filter(s => s.points.length);
+  const pts = series.flatMap(s => s.points);
+  if (!pts.length) { g.fillStyle = '#9fb3a6'; g.font = '12px sans-serif'; g.fillText('waiting for data…', pad.l, h / 2); return; }
+  const bands = (opts.lines || []).filter(b => typeof b.y === 'number');
+  let ys = pts.map(p => p[1]).concat(bands.map(b => b.y));
+  let x0 = Math.min(...pts.map(p => p[0])), x1 = Math.max(...pts.map(p => p[0]));
+  let y0 = Math.min(...ys), y1 = Math.max(...ys);
+  if (x1 === x0) x1 = x0 + 1; const span = (y1 - y0) || 1; y0 -= span * 0.1; y1 += span * 0.1;
+  const X = x => pad.l + (x - x0) / (x1 - x0) * (w - pad.l - pad.r);
+  const Y = y => h - pad.b - (y - y0) / (y1 - y0) * (h - pad.t - pad.b);
+  g.strokeStyle = '#2a3a2f'; g.fillStyle = '#9fb3a6'; g.font = '10px sans-serif'; g.lineWidth = 1;
+  for (let i = 0; i <= 3; i++) { const y = y0 + (y1 - y0) * i / 3; g.beginPath(); g.moveTo(pad.l, Y(y)); g.lineTo(w - pad.r, Y(y)); g.stroke(); g.fillText(y.toFixed(1), 4, Y(y) + 3); }
+  if (opts.xLabel) g.fillText(opts.xLabel, pad.l, h - 5);
+  for (const b of bands) { g.strokeStyle = b.color; g.setLineDash([4, 4]); g.beginPath(); g.moveTo(pad.l, Y(b.y)); g.lineTo(w - pad.r, Y(b.y)); g.stroke(); g.setLineDash([]); }
+  series.forEach((s, i) => {
+    g.strokeStyle = s.color || COLORS[i % COLORS.length]; g.lineWidth = 2; g.beginPath();
+    s.points.forEach((p, j) => (j ? g.lineTo(X(p[0]), Y(p[1])) : g.moveTo(X(p[0]), Y(p[1])))); g.stroke();
+    if (series.length > 1 || opts.legend) { g.fillStyle = g.strokeStyle; g.textAlign = 'right'; g.fillText(s.name, w - pad.r - 4, pad.t + 12 + i * 12); g.textAlign = 'left'; }
+  });
+}
+
+async function getJSON(url, body) {
+  const r = await fetch(url, body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)} : {});
+  if (!r.ok) throw new Error(url + ' → HTTP ' + r.status);
+  return r.json();
+}
+
+let nitrogen = null;
+let LIM = null;  // thresholds come from GET /advisor/limits (configs/pilot-v2.json), not hard-coded
+const lv = (k, d) => (LIM && LIM[k] ? LIM[k].value : d);
+async function loadNitrogen() {
+  try {
+    const sim = await getJSON('/simulate', {include_plot: false});
+    const rows = sim.rows;
+    nitrogen = [['TAN-N', 'TAN_N_mg_L'], ['Nitrite-N', 'nitrite_N_mg_L'], ['Nitrate-N', 'nitrate_N_mg_L']]
+      .map(([name, k], i) => ({name, color: COLORS[i], points: rows.map(r => [r.day, r[k]])}));
+  } catch (e) { nitrogen = []; }
+  drawChart($('chart-N'), nitrogen, {xLabel: 'SIM day'});
+}
+
+async function refresh() {
+  try {
+    const [latest, hist] = await Promise.all([getJSON('/telemetry/latest'), getJSON('/telemetry/history?limit=300')]);
+    const rows = hist.rows, t0 = rows.length ? rows[0].received_at_unix : 0;
+    const bySensor = {};
+    rows.forEach(r => (bySensor[r.sensor_id] ||= []).push(r));
+    const mk = (k) => Object.entries(bySensor).map(([sid, rs], i) => ({name: sid, color: COLORS[i % COLORS.length],
+      points: rs.filter(r => typeof r[k] === 'number').map(r => [r.received_at_unix - t0, r[k]])}));
+    if (!LIM) LIM = await getJSON('/advisor/limits');
+    const tr = lv('temp_range_C', [18, 24]);
+    drawChart($('chart-pH'), mk('pH'), {lines: [{y: lv('pH_alarm_low'), color: '#e0524a'}, {y: lv('pH_alarm_high'), color: '#e0524a'}], xLabel: 'seconds since first reading'});
+    drawChart($('chart-DO'), mk('DO_mg_L'), {lines: [{y: lv('DO_warning_mg_L'), color: '#e0a526'}, {y: lv('DO_critical_mg_L'), color: '#e0524a'}], xLabel: 'seconds since first reading'});
+    drawChart($('chart-temp'), mk('temp_C'), {lines: [{y: tr[0], color: '#e0a526'}, {y: tr[1], color: '#e0a526'}], xLabel: 'seconds since first reading'});
+    $('telemetryLabel').textContent = hist.label;
+    $('historyNote').textContent = `${rows.length} readings in memory (labels as sent by each sensor). Dashed lines = protocol thresholds from configs/pilot-v2.json.`;
+    const sensors = Object.values(latest.sensors);
+    $('beats').innerHTML = sensors.length ? sensors.map(s => `<tr><td>${esc(s.sensor_id)}</td><td><span class="badge LABEL">${esc(s.label)}</span></td>
+      <td>${fmt(s.pH)}</td><td>${fmt(s.DO_mg_L)}</td><td>${fmt(s.temp_C, 1)}</td><td>${fmt(s.age_seconds, 0)} s</td>
+      <td><span class="badge ${esc(s.heartbeat_status)}">${esc(s.heartbeat_status)}</span> <span class="mute">every ${fmt(s.interval_seconds, s.interval_seconds < 10 ? 1 : 0)} s</span></td></tr>`).join('')
+      : '<tr><td colspan="7" class="mute">No telemetry yet. Start <code>python tools/fake_sensor.py</code>.</td></tr>';
+    $('staleRule').textContent = latest.stale_rule;
+
+    const adv = await getJSON('/advisor/suggest', {mode: $('mode').value, use_latest_telemetry: true,
+      feed_g_day: Number($('feed').value), include_safety_demo: $('demo').checked});
+    $('advisorLabel').textContent = adv.label;
+    $('advisorNotice').innerHTML = adv.notice ? `<div class="notice">${esc(adv.notice)}</div>` : '';
+    const c = adv.safety_counts;
+    $('advisorCounts').textContent = `${c.ALLOWED} allowed · ${c.CLAMPED} clamped · ${c.BLOCKED} blocked by the safety layer · executed: ${adv.executed} · ${adv.control_mode}`;
+    $('suggestions').innerHTML = adv.suggestions.map(s => `<div class="sugg ${esc(s.safety_status)}">
+      <span class="badge ${esc(s.safety_status)}">${esc(s.safety_status)}</span> <b>${esc(s.action)}</b>:
+      ${esc(s.proposed_value)}${s.final_value !== s.proposed_value ? ' → <b>' + esc(s.final_value) + '</b>' : ''}
+      <div class="why">Why: ${esc(s.reason)}</div><div class="why">Safety: ${esc(s.safety_reasons.join(' '))}</div></div>`).join('');
+    $('refreshed').textContent = `Refreshed ${new Date().toLocaleTimeString()} · every ${REFRESH_S} s`;
+  } catch (e) {
+    $('refreshed').textContent = 'API not reachable: ' + e.message;
+  }
+}
+
+loadNitrogen();
+refresh();
+setInterval(refresh, REFRESH_S * 1000);
+window.addEventListener('resize', () => { if (nitrogen) drawChart($('chart-N'), nitrogen, {xLabel: 'SIM day'}); });
+</script>
+</body>
+</html>
