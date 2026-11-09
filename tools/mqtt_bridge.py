@@ -7,6 +7,9 @@ API's POST /telemetry, so MQTT sensors use the same validated ingest as tools/fa
     python tools/mqtt_bridge.py --broker 127.0.0.1 --api http://127.0.0.1:8000
 
 Read-only toward devices: it never publishes commands. Use a local/private broker only.
+
+Not tested against a real MQTT broker. Topic→body mapping is unit-tested; CI only checks
+that the script exits cleanly when the optional paho-mqtt dependency is missing.
 """
 import argparse
 import json

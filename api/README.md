@@ -73,6 +73,7 @@ current feed rate, heartbeat staleness), either in the request body or from the 
 - **`live`:** asks Grok through the xAI API over plain HTTPS ([advisor/live.py](advisor/live.py)). Needs `XAI_API_KEY` in the server's environment;
   uses the xAI Responses API (`POST https://api.x.ai/v1/responses`); model from the request, `XAI_MODEL`, or the default `grok-4.7`. If the key is missing or the call or reply fails, it falls back to MOCK and says why in `notice`.
   The key is never logged or returned.
+  **Not tested against the real xAI API** in CI or on the maintainer box (no API key there); only the MOCK path and a faked transport are exercised. Change the model with `XAI_MODEL` or the request field.
 - **Safety layer ([advisor/safety.py](advisor/safety.py)), same for both modes:** every suggestion comes back `ALLOWED`, `CLAMPED` or `BLOCKED` with reasons, and blocked or clamped ones are logged
   (`ecoforge.advisor.safety`). Limits come from `configs/pilot-v2.json` (see `GET /advisor/limits`):
   feed never above the 15 g/day cap (ASSUME); increases only one ramp step (+2 g/day, ASSUME) and only with known, non-alarming DO/TAN/nitrite and fresh heartbeats;
@@ -100,6 +101,7 @@ The fake sensor is a seeded random walk around the ASSUME fixture in `configs/pi
 
 Optional MQTT bridge: `pip install -r requirements-mqtt.txt`, then `python tools/mqtt_bridge.py --broker 127.0.0.1` forwards
 `ecoforge/pilot/<sensor_id>/telemetry` JSON payloads to the same `POST /telemetry`. Not needed for tests or CI.
+**Not tested against a real MQTT broker**; topic→body mapping is unit-tested, and CI only checks the bridge exits cleanly when `paho-mqtt` is missing.
 
 ## Dashboard
 

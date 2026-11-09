@@ -3,6 +3,9 @@
 Needs XAI_API_KEY in the environment. Model: XAI_MODEL (default below) or the request.
 Base URL: XAI_BASE_URL (default https://api.x.ai). The key is never logged or returned.
 Grok output is untrusted: it goes through the same safety layer as MOCK suggestions.
+
+Not tested against the real xAI API in CI (no key on the maintainer box); tests use a faked
+transport. Override the default model with XAI_MODEL or the request field.
 """
 import json
 import os

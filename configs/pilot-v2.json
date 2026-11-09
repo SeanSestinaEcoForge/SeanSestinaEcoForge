@@ -289,7 +289,7 @@
       "unit": "micron"
     },
     "method": "Attended batch -> 100-micron bag -> lidded tote -> measured pitcher top-off; no auto makeup; lab gate first",
-    "ro": "Owned iSpring backup only; no modeled RO recovery or purity guarantee",
+    "ro": "RO unit kept as backup only; no modeled RO recovery or purity guarantee",
     "exchange": "No automatic exchange; model top-up replaces evaporation, does not remove N"
   },
   "vermi": {
@@ -337,12 +337,7 @@
     "feed": "Fixed scenario only; no automatic weekly ramp, growth or sentinel harvest predicted"
   },
   "power": {
-    "breaker": {
-      "value": 7,
-      "label": "MEASURED",
-      "source": "garage-pilot-v2.md \u00a76",
-      "unit": "identifier"
-    },
+    "circuit": "dedicated GFCI-protected 20 A circuit after electrical safety check; panel slot ID not published",
     "amps": {
       "value": 20,
       "label": "MEASURED",
@@ -501,7 +496,7 @@
       "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
       "unit": "W"
     },
-    "option": "A: EcoFlow DELTA Pro 3; optional, outside Phase 1; no backfeed; no forecast is a power guarantee"
+    "option": "A: portable battery station option; optional, outside Phase 1; no backfeed; no forecast is a power guarantee"
   },
   "alarms": {
     "pH_alarm_low": {

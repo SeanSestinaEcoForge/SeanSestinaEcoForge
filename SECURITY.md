@@ -21,13 +21,13 @@ Older versions or forks may not receive security updates. Please upgrade to the 
 
 Instead, use one of the following private channels:
 
-1. **Preferred: GitHub Private Vulnerability Reporting**  
+1. **Preferred: GitHub Private Vulnerability Reporting** (enabled)  
    - Go to the [Security tab](https://github.com/SeanSestinaEcoForge/SeanSestinaEcoForge/security) of this repository.  
    - Click **Report a vulnerability** → GitHub's built-in private reporting tool.  
    - This creates a private security advisory visible only to repo maintainers.  
    - Recommended for most reports (fast, secure, tracked).
 
-2. **If private reporting is not yet enabled** on the Security tab:  
+2. **Fallback if the Security tab form is unavailable:**  
    - No security email is published yet. Send a short DM to @SeanSestina on X asking for a private channel (no exploit details in the first message).  
    - Then share:  
      - Description of the vulnerability  
@@ -72,4 +72,4 @@ We will acknowledge receipt of your report within **48 hours** and strive to pro
 
 Thank you for helping make EcoForge safer for everyone building toward Earth abundance and Mars readiness.
 
-Last updated: February 2026
+Last updated: November 2026

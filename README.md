@@ -66,7 +66,7 @@ What exists today:
 1. **An honest design system** — every number labeled MEASURED, QUOTED, SIM, ASSUME, IDEA, or CALC so nobody confuses a hope with a result.
 2. **A tested garage-pilot planning simulator** — FastAPI app with a dissolved-nitrogen model, power budget and protocol alarm rules; every parameter labeled with its source; 127 automated tests across the API, advisor and heartbeat path (MEASURED *software* result, not physical validation): [api/](api/README.md), [configs/pilot-v2.json](configs/pilot-v2.json), [tests/](tests/)
    - **Grok advisor with a caution-first safety layer** — MOCK rules by default (no key), LIVE Grok optional; every suggestion is clamped or blocked against the pilot limits (feed cap, ramp step, temperature range, aeration never stops, no dose amounts) and nothing is ever actuated: [api/advisor/](api/advisor/safety.py)
-   - **5-minute sensor heartbeat path + dashboard** — fake SIM sensor → `POST /telemetry` → stale detection → advisor → [dashboard](api/static/dashboard.html); optional [MQTT bridge](tools/mqtt_bridge.py)
+   - **5-minute sensor heartbeat path + dashboard** — fake SIM sensor → `POST /telemetry` → stale detection → advisor → [dashboard](api/static/dashboard.html); optional [MQTT bridge](tools/mqtt_bridge.py) (live Grok and the MQTT bridge are **not tested against real services**; mock/fake paths are)
 3. **Public simulations** you can run — nutrient/vermiponics teaching models and a biogas digestion ODE ([simulations map](simulations/README.md)):
    - [simulations/aquaponics_vermiponics_enhanced_ph_alk.py](simulations/aquaponics_vermiponics_enhanced_ph_alk.py)
    - [simulations/sim_biogas_digestion.py](simulations/sim_biogas_digestion.py)
