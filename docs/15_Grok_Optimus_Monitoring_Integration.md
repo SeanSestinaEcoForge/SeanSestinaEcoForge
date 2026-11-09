@@ -59,3 +59,34 @@ Transform the basic monitoring spreadsheet into a real-time, AI-augmented, robot
 **Retrieval Command**: “Pull EcoForge Grok Automation Monitoring Integration” or “Show EcoForge Document 15”
 
 This document is now the official intelligent control layer plan.
+
+---
+
+## Future: Optimus integration (IDEA)
+
+> **Label: IDEA.** Not available, not tested, no partnership or affiliation with Tesla or xAI. Nothing in this section is MEASURED. Restored from the March 2026 plan and reworded to match the current Grok advisor safety model.
+
+**Intent.** Once Tesla Optimus (or a similar humanoid) is something a family can actually buy and run, EcoForge would treat it as a *physical actuator peer* of the Grok advisor — not a replacement for it, and never a bypass of it.
+
+**How it would plug in (sketch, ASSUME / IDEA):**
+1. Grok advisor (MOCK or LIVE) proposes a robot task the same way it proposes a feed or aeration change today: a structured suggestion with `executed: false`.
+2. The **safety layer** clamps or blocks the request (same rules as software suggestions: no unattended motion, no air/circulation off, no unlabeled dose amounts, stale or missing heartbeats block escalation).
+3. A **human** must approve before any motion command leaves the node. Tele-op / voice-assist first; autonomy only after MEASURED pilot trust.
+4. The robot posts its own **heartbeat** on the same telemetry path. Missed beats → LATE / STALE the same way a quiet sensor does, and the advisor must not escalate new robot tasks while the robot is stale.
+5. Fail-safe: if the robot, Starlink, or the API is down, the spreadsheet + local Grok path still works; a human does the physical work by hand.
+
+**Candidate tasks (IDEA — examples, not a commitment):**
+- Feeding checks and attended top-ups (human still sets the daily cap)
+- Filter / settler cleaning assists
+- Water sampling runs to a marked station
+- Light harvest help (e.g. duckweed skim — daily fraction is **ASSUME / IDEA**, not MEASURED)
+- Bay inspection walks that feed photos or notes back into the advisor context
+
+**Phasing (IDEA / ASSUME, not a schedule):**
+- After garage-pilot MEASURED data and a working real-sensor heartbeat
+- Tele-op / voice for one routine task on Container 1
+- Expand to daily attended routines only after the safety layer and human-approve loop have a clean record
+- Multi-node / fleet coordination only at hub scale, still human-gated
+
+**Out of scope until proven:** unattended night runs, any command that can cut aeration or circulation, any chemical dosing by the robot, and any claim of partnership, endorsement, or availability.
+

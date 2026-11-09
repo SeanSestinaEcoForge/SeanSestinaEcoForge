@@ -135,6 +135,16 @@ One **40-ft high-cube** for fish + water treatment, with plant beds in a greenho
 
 ---
 
+## Future integrations (IDEA)
+
+- **Tesla Optimus** (IDEA): someday handle routine physical tasks — feeding checks, filter cleaning, water sampling, harvest help — once the robots are available to buy.
+- Same wiring as the Grok advisor: task requests go through the safety layer with `executed: false` until a human approves; no unattended actuation.
+- **Not available, not tested.** No partnership or affiliation with Tesla or xAI.
+- Longer-term Moon / Mars regenerative life-support analog: also **IDEA** (one-line vision, no schedule or claim).
+- Details: [docs/15_Grok_Optimus_Monitoring_Integration.md](docs/15_Grok_Optimus_Monitoring_Integration.md).
+
+---
+
 ## Quick start
 
 ```bash
@@ -222,6 +232,7 @@ flowchart TB
   HUMAN["Human decides and acts<br/>software never actuates"]:::human
   MQTT["Real ESP32 sensors + MQTT bridge<br/>planned"]:::idea
   NODE["40-ft high-cube node<br/>IDEA: after MEASURED pilot data"]:::idea
+  OPTIMUS["Optimus robot tasks<br/>IDEA: once available to buy"]:::idea
 
   RAIN -.-> SUMP
   RO -. "if needed" .-> SUMP
@@ -233,6 +244,9 @@ flowchart TB
   DASH --> HUMAN
   HUMAN -. "manual feed, top-up, tests" .-> FISH
   HUMAN -. "real data first" .-> NODE
+  SAFETY -. "task requests, executed:false" .-> OPTIMUS
+  HUMAN -. "approves before any motion" .-> OPTIMUS
+  OPTIMUS -. "robot heartbeat" .-> API
 ```
 
 </details>

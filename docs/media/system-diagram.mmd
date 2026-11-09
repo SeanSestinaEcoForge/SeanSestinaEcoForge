@@ -41,6 +41,7 @@ flowchart TB
   HUMAN["Human decides and acts<br/>software never actuates"]:::human
   MQTT["Real ESP32 sensors + MQTT bridge<br/>planned"]:::idea
   NODE["40-ft high-cube node<br/>IDEA: after MEASURED pilot data"]:::idea
+  OPTIMUS["Optimus robot tasks<br/>IDEA: once available to buy"]:::idea
 
   RAIN -.-> SUMP
   RO -. "if needed" .-> SUMP
@@ -52,3 +53,6 @@ flowchart TB
   DASH --> HUMAN
   HUMAN -. "manual feed, top-up, tests" .-> FISH
   HUMAN -. "real data first" .-> NODE
+  SAFETY -. "task requests, executed:false" .-> OPTIMUS
+  HUMAN -. "approves before any motion" .-> OPTIMUS
+  OPTIMUS -. "robot heartbeat" .-> API
