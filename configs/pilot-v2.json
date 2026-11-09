@@ -1,0 +1,742 @@
+{
+  "name": "Garage Pilot v2",
+  "status": "DRAFT design; not an as-built certification",
+  "flow": [
+    "sump -> pump -> fish tank",
+    "gravity -> radial settler -> fines bag -> K1 MBBR -> raised DWC -> sump",
+    "sludge -> dewatering bucket -> worms (separate; no leachate return)"
+  ],
+  "volumes_L": {
+    "fish_tank": {
+      "value": 300.0,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a74; tools/garage_pilot_v2.json vols",
+      "unit": "L",
+      "note": "Design working water, verify by metered fill; MBBR carrier displacement not independently measured"
+    },
+    "settler": {
+      "value": 95.5,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74; tools/garage_pilot_v2.json vols",
+      "unit": "L",
+      "note": "Design working water, verify by metered fill; MBBR carrier displacement not independently measured"
+    },
+    "fines_bucket": {
+      "value": 17.3,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74; tools/garage_pilot_v2.json vols",
+      "unit": "L",
+      "note": "Design working water, verify by metered fill; MBBR carrier displacement not independently measured"
+    },
+    "mbbr": {
+      "value": 126.6,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74; tools/garage_pilot_v2.json vols",
+      "unit": "L",
+      "note": "Design working water, verify by metered fill; MBBR carrier displacement not independently measured"
+    },
+    "dwc": {
+      "value": 372.0,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74; tools/garage_pilot_v2.json vols",
+      "unit": "L",
+      "note": "Design working water, verify by metered fill; MBBR carrier displacement not independently measured"
+    },
+    "sump": {
+      "value": 79.9,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74; tools/garage_pilot_v2.json vols",
+      "unit": "L",
+      "note": "Design working water, verify by metered fill; MBBR carrier displacement not independently measured"
+    }
+  },
+  "hydraulics": {
+    "pumps": {
+      "value": 1,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a70",
+      "unit": "count"
+    },
+    "flow_range_L_h": {
+      "value": [
+        300,
+        600
+      ],
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a74",
+      "unit": "L/h"
+    },
+    "fines_bag_micron": {
+      "value": 200,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a74",
+      "unit": "micron"
+    },
+    "sump_freeboard_L": {
+      "value": 41.1,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74",
+      "unit": "L"
+    },
+    "draindown_L": {
+      "value": 32.3,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a74",
+      "unit": "L"
+    }
+  },
+  "fish": {
+    "species": {
+      "value": "comet goldfish",
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "species"
+    },
+    "count": {
+      "value": 10,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "fish"
+    },
+    "feed_start_g_day": {
+      "value": 5,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "g/day"
+    },
+    "feed_cap_g_day": {
+      "value": 15,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "g/day",
+      "note": "Caution-first cap, not measured biofilter capacity"
+    },
+    "feed_ramp_g_week": {
+      "value": 2,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "g/day per week"
+    },
+    "protein_fraction": {
+      "value": 0.32,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md fish.protein_fraction; FAO 589",
+      "unit": "fraction"
+    },
+    "TAN_per_kg_protein": {
+      "value": 0.092,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md Timmons & Ebeling",
+      "unit": "kg N/kg protein"
+    }
+  },
+  "water_temp_C": {
+    "value": 21,
+    "label": "ASSUME",
+    "source": "model/pilot/config-garage-A.json",
+    "unit": "\u00b0C"
+  },
+  "biofilter": {
+    "media_ssa_m2_per_m3": {
+      "value": 500,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md biofilter.media_ssa_m2_per_m3",
+      "unit": "m\u00b2/m\u00b3"
+    },
+    "STR_ref_g_m2_d": {
+      "value": 0.25,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md biofilter.STR_ref_g_m2_d",
+      "unit": "g N/m\u00b2/day"
+    },
+    "SNR_ref_g_m2_d": {
+      "value": 0.14,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md biofilter.SNR_ref_g_m2_d",
+      "unit": "g N/m\u00b2/day"
+    },
+    "T_ref_C": {
+      "value": 30,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md biofilter.T_ref_C",
+      "unit": "\u00b0C"
+    },
+    "theta_TAN": {
+      "value": 1.079,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md biofilter.theta_TAN",
+      "unit": "dimensionless"
+    },
+    "theta_NO2": {
+      "value": 1.054,
+      "label": "QUOTED",
+      "source": "model/parameter-register-v4.md biofilter.theta_NO2",
+      "unit": "dimensionless"
+    },
+    "long_term_factor": {
+      "value": 0.8,
+      "label": "ASSUME",
+      "source": "model/parameter-register-v4.md biofilter.long_term_factor",
+      "unit": "dimensionless"
+    },
+    "K_TAN_mg_L": {
+      "value": 0.38,
+      "label": "CALC",
+      "source": "model/parameter-register-v4.md biofilter.K_TAN_mg_L",
+      "unit": "mg N/L"
+    },
+    "K_NO2_mg_L": {
+      "value": 0.61,
+      "label": "CALC",
+      "source": "model/parameter-register-v4.md biofilter.K_NO2_mg_L",
+      "unit": "mg N/L"
+    },
+    "acclimation_start_frac": {
+      "value": 0.5,
+      "label": "ASSUME",
+      "source": "model/parameter-register-v4.md biofilter.acclimation_start_frac",
+      "unit": "dimensionless"
+    },
+    "acclimation_days": {
+      "value": 60,
+      "label": "ASSUME",
+      "source": "model/parameter-register-v4.md biofilter.acclimation_days",
+      "unit": "day"
+    },
+    "media_L": {
+      "value": 70,
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a74",
+      "unit": "L",
+      "note": "Carrier bulk volume, NOT 55-gal drum nominal volume"
+    },
+    "dwc_nitrification_credit_m2": {
+      "value": 0,
+      "label": "ASSUME",
+      "source": "Local caution-first choice; model/parameter-register-v4.md dwc_surface efficiency is unvalidated",
+      "unit": "m\u00b2"
+    }
+  },
+  "plants": {
+    "bed_area_m2": {
+      "value": 1.49,
+      "label": "CALC",
+      "source": "model/pilot/config-garage-A.json; model/parameter-register-v4.md plants.bed_area_m2",
+      "unit": "m\u00b2"
+    },
+    "min_planted_m2": {
+      "value": 0.5,
+      "label": "ASSUME",
+      "source": "model/pilot/config-garage-A.json; model/parameter-register-v4.md plants.min_planted_m2",
+      "unit": "m\u00b2"
+    },
+    "frr_planting_g_m2_d": {
+      "value": 16,
+      "label": "CALC",
+      "source": "model/pilot/config-garage-A.json; model/parameter-register-v4.md plants.frr_planting_g_m2_d",
+      "unit": "g feed/m\u00b2/day"
+    },
+    "uptake_max_gN_m2_d": {
+      "value": 0.6,
+      "label": "CALC",
+      "source": "model/pilot/config-garage-A.json; model/parameter-register-v4.md plants.uptake_max_gN_m2_d",
+      "unit": "g N/m\u00b2/day"
+    },
+    "K_NO3_mg_L": {
+      "value": 10.0,
+      "label": "ASSUME",
+      "source": "model/pilot/config-garage-A.json; model/parameter-register-v4.md plants.K_NO3_mg_L",
+      "unit": "mg N/L"
+    }
+  },
+  "initial": {
+    "TAN": {
+      "value": 0,
+      "label": "ASSUME",
+      "source": "model/pilot/config-garage-A.json initial; sample scenario only",
+      "unit": "mg N/L"
+    },
+    "NO2": {
+      "value": 0,
+      "label": "ASSUME",
+      "source": "model/pilot/config-garage-A.json initial; sample scenario only",
+      "unit": "mg N/L"
+    },
+    "NO3": {
+      "value": 5,
+      "label": "ASSUME",
+      "source": "model/pilot/config-garage-A.json initial; sample scenario only",
+      "unit": "mg N/L"
+    }
+  },
+  "water": {
+    "topup_L_day": {
+      "value": 5,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a77 range 3\u20138 L/day; scenario midpoint",
+      "unit": "L/day"
+    },
+    "makeup_nitrate_N_mg_L": {
+      "value": 0,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a78; untested until rain lab result",
+      "unit": "mg N/L"
+    },
+    "rain_filter_micron": {
+      "value": 100,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a78",
+      "unit": "micron"
+    },
+    "method": "Attended batch -> 100-micron bag -> lidded tote -> measured pitcher top-off; no auto makeup; lab gate first",
+    "ro": "Owned iSpring backup only; no modeled RO recovery or purity guarantee",
+    "exchange": "No automatic exchange; model top-up replaces evaporation, does not remove N"
+  },
+  "vermi": {
+    "mode": "Separate dewatered sludge side stream, not a submerged part of the water loop",
+    "return_fraction": {
+      "value": 0,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a70/\u00a73/\u00a74",
+      "unit": "fraction",
+      "note": "No vermi leachate fed back; worm mass/rates not measured, so no fictional decay/yield prediction"
+    }
+  },
+  "simulation": {
+    "days": {
+      "value": 30,
+      "label": "ASSUME",
+      "source": "Local demonstration horizon, not operating claim",
+      "unit": "day"
+    },
+    "max_days": {
+      "value": 180,
+      "label": "ASSUME",
+      "source": "Local API resource limit",
+      "unit": "day"
+    },
+    "solver_max_step_day": {
+      "value": 0.1,
+      "label": "ASSUME",
+      "source": "Local numerical resolution, v4 used 0.05 day",
+      "unit": "day"
+    },
+    "solver_rtol": {
+      "value": 1e-08,
+      "label": "ASSUME",
+      "source": "model/sim-nutrient-v4.py numerical tolerance",
+      "unit": "dimensionless"
+    },
+    "solver_atol": {
+      "value": 1e-10,
+      "label": "ASSUME",
+      "source": "model/sim-nutrient-v4.py numerical tolerance",
+      "unit": "dimensionless"
+    },
+    "mixing": "Well mixed total working water; hydraulic residence/delay/oxygen/pH not modeled",
+    "feed": "Fixed scenario only; no automatic weekly ramp, growth or sentinel harvest predicted"
+  },
+  "power": {
+    "breaker": {
+      "value": 7,
+      "label": "MEASURED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "identifier"
+    },
+    "amps": {
+      "value": 20,
+      "label": "MEASURED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "A"
+    },
+    "voltage": {
+      "value": 120,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "V"
+    },
+    "continuous_fraction": {
+      "value": 0.8,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "fraction"
+    },
+    "tent_rated_W": {
+      "value": 730,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "tent_cap_fraction": {
+      "value": 0.6,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "fraction"
+    },
+    "heaters_W": {
+      "value": 600,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "tent_fan_W": {
+      "value": 64,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "clip_fans_W": {
+      "value": 16,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "cube_fan_W": {
+      "value": 28,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "pump_W": {
+      "value": 24,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "air_W": {
+      "value": 20,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "backup_air_AC_W": {
+      "value": 10,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "pi_network_UPS_W": {
+      "value": 25,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "seedling_W": {
+      "value": 20,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "overhead_LED_W": {
+      "value": 40,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "other_loads_W": {
+      "value": null,
+      "label": "ASSUME",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "W"
+    },
+    "space_heater_allowed": {
+      "value": false,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a76",
+      "unit": "boolean"
+    },
+    "wall_charge_cap_15A_W": {
+      "value": 150,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a713.5",
+      "unit": "W"
+    }
+  },
+  "solar": {
+    "enabled": {
+      "value": false,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "boolean"
+    },
+    "panel_count": {
+      "value": 4,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "panels"
+    },
+    "panel_W": {
+      "value": 400,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "W"
+    },
+    "battery_Wh": {
+      "value": 4096,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "Wh"
+    },
+    "life_support_kWh_day": {
+      "value": [
+        1.656,
+        1.896
+      ],
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "kWh/day"
+    },
+    "ride_through_h": {
+      "value": [
+        31,
+        43.9
+      ],
+      "label": "CALC",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "hour"
+    },
+    "wall_charge_cap_W": {
+      "value": 300,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a713; tools/garage_solar.json",
+      "unit": "W"
+    },
+    "option": "A: EcoFlow DELTA Pro 3; optional, outside Phase 1; no backfeed; no forecast is a power guarantee"
+  },
+  "alarms": {
+    "pH_alarm_low": {
+      "value": 6.5,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "pH"
+    },
+    "pH_alarm_high": {
+      "value": 7.5,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "pH"
+    },
+    "TAN_alarm_mg_L": {
+      "value": 1,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "mg N/L"
+    },
+    "nitrite_alarm_mg_L": {
+      "value": 0.5,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "mg/L protocol basis unconfirmed"
+    },
+    "nitrate_alarm_mg_L": {
+      "value": 150,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "mg/L protocol basis unconfirmed"
+    },
+    "KH_alarm_mg_L": {
+      "value": 50,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "mg/L CaCO3"
+    },
+    "DO_warning_mg_L": {
+      "value": 5,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "mg/L O2"
+    },
+    "DO_critical_mg_L": {
+      "value": 4,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "mg/L O2"
+    },
+    "level_low_pct": {
+      "value": 80,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "% calibrated full"
+    },
+    "level_critical_pct": {
+      "value": 70,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "% calibrated full"
+    },
+    "vermi_moisture_low_pct": {
+      "value": 60,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "%"
+    },
+    "vermi_moisture_high_pct": {
+      "value": 80,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "%"
+    },
+    "vermi_temp_low_F": {
+      "value": 50,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "\u00b0F"
+    },
+    "vermi_temp_high_F": {
+      "value": 80,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "\u00b0F"
+    },
+    "SOC_floor_pct": {
+      "value": 30,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "%"
+    },
+    "heartbeat_seconds": {
+      "value": 300,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "second"
+    },
+    "ro_min_recovery_pct": {
+      "value": 96.5,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "%",
+      "note": "RO recovery is historical protocol monitoring requirement, not a pilot design/default performance claim"
+    },
+    "ro_max_TDS_ppm": {
+      "value": 6,
+      "label": "QUOTED",
+      "source": "measurement-protocol-v1.md v1.2 \u00a74/\u00a75",
+      "unit": "ppm",
+      "note": "RO recovery is historical protocol monitoring requirement, not a pilot design/default performance claim"
+    }
+  },
+  "unknowns": [
+    "Metered working water volumes incl carrier displacement, flow and drain-down",
+    "Fish weights, real feed protein, biological nitrification rate and acclimation",
+    "Nitrite/nitrate test-kit reporting basis as N versus ion; protocol units need confirmation",
+    "Electrical wire/fuse/GFCI check, all other garage loads; 20 A is not approval",
+    "Garage winter heat type/circuit, fixture wattage label, actual heater duty",
+    "Rain lab result, makeup nitrate/KH, RO measured recovery/permeate TDS",
+    "Level percent reference/calibration per vessel; do not derive from nominal tank gallons",
+    "MQTT broker, sensor IDs, sensor calibration and independent backup-power test",
+    "Solar optional, not installed; station idle and real ride-through unmeasured"
+  ],
+  "startup": {
+    "electrical_gate": "No water until wire/fuse/GFCI checks pass; do not infer approval from power-budget arithmetic",
+    "fishless_cycle_TAN_challenge_mg_L": {
+      "value": 2,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a75/\u00a710; protocol v1.2",
+      "unit": "mg N/L"
+    },
+    "fishless_cycle_clear_hours": {
+      "value": 24,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "hour",
+      "note": "TAN and nitrite must clear per test method; not inferred from this SIM"
+    },
+    "fishless_cycle_consecutive_days": {
+      "value": 3,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a75",
+      "unit": "day"
+    },
+    "quarantine_days": {
+      "value": 14,
+      "label": "QUOTED",
+      "source": "garage-pilot-v2.md \u00a75; SRAC 452",
+      "unit": "day"
+    },
+    "permit": "Caution-first permit decision before ANY fish; nothing filed by this software",
+    "feed_ramp": "No auto-ramp: only after required clean spot tests and manual review per garage-pilot-v2.md \u00a75",
+    "rain": "Lab test must pass before rain makeup; 100-micron bag is not disinfection"
+  },
+  "request_policy": {
+    "scenario_override_label": "ASSUME unless accompanied by a separately verified measurement source; returned SIM outputs never MEASURED",
+    "temperature_range_C": {
+      "value": [
+        18,
+        24
+      ],
+      "label": "ASSUME",
+      "source": "model/pilot/config-garage-A.json pilot range",
+      "unit": "\u00b0C"
+    },
+    "initial_concentration_max_mg_N_L": {
+      "value": 1000,
+      "label": "ASSUME",
+      "source": "Local API numerical guardrail, NOT a safe operating concentration",
+      "unit": "mg N/L"
+    },
+    "percent_range": {
+      "value": [
+        0,
+        100
+      ],
+      "label": "CALC",
+      "source": "Definition of percentage",
+      "unit": "%"
+    },
+    "pH_input_range": {
+      "value": [
+        0,
+        14
+      ],
+      "label": "ASSUME",
+      "source": "Local freshwater input validation, NOT target pH",
+      "unit": "pH"
+    },
+    "default_other_loads": "Unknown, not zero. Declare measured aggregate only after listing every shared circuit load.",
+    "default_electrical_gate_confirmed": {
+      "value": false,
+      "label": "ASSUME",
+      "source": "No completed inspection result available",
+      "unit": "boolean"
+    },
+    "default_station_charging": {
+      "value": false,
+      "label": "IDEA",
+      "source": "Solar optional and not installed",
+      "unit": "boolean"
+    },
+    "default_RO_active": {
+      "value": false,
+      "label": "IDEA",
+      "source": "garage-pilot-v2.md \u00a78/\u00a79 backup only",
+      "unit": "boolean"
+    },
+    "default_nutrient_basis": "Unknown. NO2/NO3 alarm comparison requires caller to assert sample AND protocol basis."
+  },
+  "sensor_stub_fixture": {
+    "pH": {
+      "value": 7.0,
+      "label": "ASSUME",
+      "source": "Synthetic local demonstration fixture; NOT real hardware",
+      "unit": "pH"
+    },
+    "DO_mg_L": {
+      "value": 6.0,
+      "label": "ASSUME",
+      "source": "Synthetic local demonstration fixture; NOT real hardware",
+      "unit": "mg/L O2"
+    },
+    "temp_C": {
+      "value": 21.0,
+      "label": "ASSUME",
+      "source": "Synthetic local demonstration fixture; NOT real hardware",
+      "unit": "\u00b0C"
+    },
+    "flow_L_h": {
+      "value": 450.0,
+      "label": "ASSUME",
+      "source": "Synthetic local demonstration fixture; NOT real hardware",
+      "unit": "L/h"
+    }
+  }
+}

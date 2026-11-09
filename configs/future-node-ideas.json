@@ -1,0 +1,52 @@
+{
+  "name": "Future node ideas / historical targets ONLY",
+  "runnable": false,
+  "status": "IDEA: NOT current pilot defaults, NOT measured or promised",
+  "parameters": {
+    "fish_tank_US_gal": {
+      "value": 700,
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "US gal"
+    },
+    "net_energy_kWh_day": {
+      "value": 16,
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "kWh/day"
+    },
+    "surplus_food_lb_month": {
+      "value": 400,
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "lb/month"
+    },
+    "GAHT": {
+      "value": true,
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "boolean"
+    },
+    "biogas": {
+      "value": true,
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "boolean"
+    },
+    "RO_recovery_headline_pct": {
+      "value": 96.5,
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "%"
+    },
+    "species_options": {
+      "value": [
+        "tilapia",
+        "yellow perch"
+      ],
+      "label": "IDEA",
+      "source": "Historical README/protocol targets; not validated",
+      "unit": "species"
+    }
+  }
+}

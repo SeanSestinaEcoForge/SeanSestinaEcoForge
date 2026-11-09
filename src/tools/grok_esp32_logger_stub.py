@@ -1,57 +1,65 @@
-# grok_esp32_logger_stub.py
-# EcoForge Grok/ESP32 sensor logging prototype
-# Simulates Atlas TDS/pH/flow; logs to CSV; ready for real hardware in Phase 2
-
-import time
-import random
+"""SIM-only ESP32/MQTT payload and append-only logger stub; no network I/O.
+Run: python -m src.tools.grok_esp32_logger_stub --cycles 3 --interval 0
+Always terminates: default is one reading. Writes artifacts/sensor-stub.csv (git-ignored).
+Heartbeat every 300 seconds (QUOTED protocol v1.2). No brokers or controls.
+"""
+import argparse
 import csv
+import json
+import time
 from datetime import datetime
+from zoneinfo import ZoneInfo
+from pathlib import Path
+from api.configuration import ROOT, load_config, values
+from api.main import AlarmRequest
+from api.alarms import evaluate
 
-LOG_FILE = "ecoforge_sensor_logs.csv"
-
-# Blueprint v3 targets
-TARGET_TDS_MAX = 6.0
-TARGET_PH_MIN, TARGET_PH_MAX = 6.8, 7.2
-TARGET_FLOW_MIN, TARGET_FLOW_MAX = 15.0, 20.0
+HEARTBEAT_SECONDS = values(load_config()['alarms'])['heartbeat_seconds']
+LOG_FILE = ROOT / 'artifacts' / 'sensor-stub.csv'
+SENSOR_ID = 'pilot-esp32-sim'
 
 def read_sensors_sim():
-    tds = random.uniform(3.5, 7.5)
-    ph = random.uniform(6.5, 7.5)
-    flow_lmh = random.uniform(14.0, 21.0)
-    energy_kwh_m3 = 0.55
-    timestamp = datetime.now().isoformat()
-    
-    status = "nominal"
-    if tds > TARGET_TDS_MAX or not (TARGET_PH_MIN <= ph <= TARGET_PH_MAX) or flow_lmh < TARGET_FLOW_MIN:
-        status = "alert"
-    
-    return {
-        "timestamp": timestamp,
-        "tds_ppm": round(tds, 2),
-        "ph": round(ph, 2),
-        "flow_lmh": round(flow_lmh, 2),
-        "energy_kwh_m3": energy_kwh_m3,
-        "status": status
-    }
+    # ASSUME synthetic fixture, NOT an instrument sample. Unknown channels stay missing.
+    return {'timestamp':datetime.now(ZoneInfo('America/New_York')).isoformat(),
+            'label':'SIM','source':'ASSUME synthetic demo fixture, not hardware',
+            'sensor_id':SENSOR_ID,**values(load_config()['sensor_stub_fixture']),'ro_active':False}
 
-def log_reading(data):
-    print(f"[{data['timestamp']}] {data['status'].upper()}: TDS={data['tds_ppm']} ppm | pH={data['ph']} | Flow={data['flow_lmh']} LMH")
-    file_exists = False
-    try:
-        with open(LOG_FILE, 'r') as f: file_exists = True
-    except FileNotFoundError:
-        pass
-    with open(LOG_FILE, 'a', newline='') as csvfile:
-        fieldnames = ["timestamp", "tds_ppm", "ph", "flow_lmh", "energy_kwh_m3", "status"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        if not file_exists:
-            writer.writeheader()
-        writer.writerow(data)
+def heartbeat_payload(reading):
+    return {'topic':f"ecoforge/pilot/{reading['sensor_id']}/heartbeat",
+            'interval_seconds':HEARTBEAT_SECONDS,'label':'SIM',
+            'source':'measurement-protocol-v1.md v1.2 §3; fake ESP32 fixture',
+            'payload':{'sensor_id':reading['sensor_id'],'timestamp':reading['timestamp'],
+                       'label':'SIM','alive':True},'network_publish_executed':False}
 
-if __name__ == "__main__":
-    print("🌱 EcoForge Sensor Logger Stub RUNNING — simulating Grok/ESP32 metrics...")
-    for i in range(15):  # 15 quick cycles
-        data = read_sensors_sim()
-        log_reading(data)
-        time.sleep(3)  # fast for demo
-    print("✅ Logs saved to ecoforge_sensor_logs.csv — ready for dashboard feed!")
+def heartbeat_due(last_sent_monotonic, now_monotonic):
+    return last_sent_monotonic is None or now_monotonic-last_sent_monotonic >= HEARTBEAT_SECONDS
+
+def log_reading(data, path=LOG_FILE):
+    path = Path(path).resolve()
+    if not path.is_relative_to(ROOT):
+        raise ValueError('Logs must remain inside the local app copy')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    exists = path.exists() and path.stat().st_size > 0
+    with path.open('a',newline='') as fh:
+        w = csv.DictWriter(fh,fieldnames=list(data))
+        if not exists:w.writeheader()
+        w.writerow(data)
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--cycles',type=int,default=1,help='number of readings, then exit (default 1)')
+    parser.add_argument('--interval',type=float,default=HEARTBEAT_SECONDS,
+                        help='seconds between readings (default: QUOTED 300 s protocol heartbeat; use 0 for a quick demo)')
+    args=parser.parse_args()
+    if not 1 <= args.cycles <= 100:parser.error('cycles must be 1..100 (ASSUME local demo bound)')
+    if not 0 <= args.interval <= 3600:parser.error('interval must be 0..3600 seconds')
+    for i in range(args.cycles):
+        reading=read_sensors_sim(); log_reading(reading)
+        print(json.dumps(heartbeat_payload(reading)))
+        req=AlarmRequest(data_label='SIM',data_source=reading['source'],pH=reading['pH'],DO_mg_L=reading['DO_mg_L'],
+                         heartbeat_age_seconds={SENSOR_ID:0},expected_sensor_ids=[SENSOR_ID])
+        print(json.dumps({'alarm_status':evaluate(load_config(),req)['status'],
+                          'note':'Unmeasured channels remain INCOMPLETE, not nominal'}))
+        if i+1 < args.cycles:time.sleep(args.interval)
+
+if __name__=='__main__':main()
