@@ -18,6 +18,12 @@ EcoForge is a family-built, open-source **vermi-aquaponics** node: worms turn wa
 
 **Latest snapshot:** [progress/2026-11-update.md](progress/2026-11-update.md)
 
+**Try it:** [Dashboard demo](#try-the-dashboard-demo-3-commands) · [Grok advisor + safety layer](api/README.md#grok-advisor-demo-suggests-never-actuates) · [Sensor heartbeat](api/README.md#sensor-heartbeat-telemetry) · [System diagram](#system-diagram) · [Contributing](CONTRIBUTING.md)
+
+![Dashboard demo: SIMULATION, fake sensor and MOCK advisor](docs/media/dashboard-demo.gif)
+
+*Recorded on a development computer: a fake sensor (SIM) posts readings every 0.7 s while dissolved oxygen drifts down; the MOCK advisor suggests backup aeration and a feed pause, and the safety layer blocks the canned unsafe suggestions. **Simulation, not measured data.** Nothing is actuated.*
+
 ---
 
 ## Unique belief
@@ -58,7 +64,9 @@ I have no degree in engineering, biology, or agriculture. I work by finding a ha
 What exists today:
 
 1. **An honest design system** — every number labeled MEASURED, QUOTED, SIM, ASSUME, IDEA, or CALC so nobody confuses a hope with a result.
-2. **A tested garage-pilot planning simulator** — FastAPI app with a dissolved-nitrogen model, power budget and protocol alarm rules; every parameter labeled with its source; 77 automated tests (MEASURED *software* result, not physical validation): [api/](api/README.md), [configs/pilot-v2.json](configs/pilot-v2.json), [tests/](tests/test_pilot_api.py)
+2. **A tested garage-pilot planning simulator** — FastAPI app with a dissolved-nitrogen model, power budget and protocol alarm rules; every parameter labeled with its source; 127 automated tests across the API, advisor and heartbeat path (MEASURED *software* result, not physical validation): [api/](api/README.md), [configs/pilot-v2.json](configs/pilot-v2.json), [tests/](tests/)
+   - **Grok advisor with a caution-first safety layer** — MOCK rules by default (no key), LIVE Grok optional; every suggestion is clamped or blocked against the pilot limits (feed cap, ramp step, temperature range, aeration never stops, no dose amounts) and nothing is ever actuated: [api/advisor/](api/advisor/safety.py)
+   - **5-minute sensor heartbeat path + dashboard** — fake SIM sensor → `POST /telemetry` → stale detection → advisor → [dashboard](api/static/dashboard.html); optional [MQTT bridge](tools/mqtt_bridge.py)
 3. **Public simulations** you can run — nutrient/vermiponics teaching models and a biogas digestion ODE ([simulations map](simulations/README.md)):
    - [simulations/aquaponics_vermiponics_enhanced_ph_alk.py](simulations/aquaponics_vermiponics_enhanced_ph_alk.py)
    - [simulations/sim_biogas_digestion.py](simulations/sim_biogas_digestion.py)
@@ -122,7 +130,7 @@ One **40-ft high-cube** for fish + water treatment, with plant beds in a greenho
 2. Build the garage pilot dry, then wet; fishless cycle; goldfish sentinels; log MEASURED water, nutrients, and power.
 3. Feed real data back into the models (retire SIM assumptions that fail).
 4. Sequence Container 1: site ready → pad/container → plumbing → sensors → greenhouse.
-5. Sensor integration examples + MQTT topic tree in-repo.
+5. Swap the fake SIM sensor for real ESP32 probes on the same heartbeat path (the API ingest, stale check and MQTT bridge example are in-repo now).
 6. One coherent public open-source release when the pilot proof and living docs are ready.
 
 ---
@@ -139,19 +147,92 @@ python simulations/sim_biogas_digestion.py
 
 Each sim prints its results (all **SIM**) and saves any plot to `outputs/`; nothing blocks on a plot window (add `--show` to open one).
 
+### Try the dashboard demo (3 commands)
+
+```bash
+pip install -r requirements-dev.txt
+python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 &
+python tools/fake_sensor.py --interval 2 --count 60 --scenario do-drop
+```
+
+While the fake sensor runs (2 minutes), open `http://127.0.0.1:8000/dashboard`. Everything on it is **SIM** or **MOCK**: a seeded fake sensor, the planning model and the rule-based advisor. Stop the server afterwards with `kill %1` (or run it in a second terminal and press Ctrl-C). No API key or internet needed.
+
 ### Run the tested garage-pilot API
 
 ```bash
 pip install -r requirements-dev.txt
-python -m pytest -q                                   # 77 tests
+python -m pytest -q                                   # 127 tests
 python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
 ```
 
 Then open `http://127.0.0.1:8000/docs`. Details and example requests: [api/README.md](api/README.md). Development and planning only — not a production control system.
 
+### System diagram
+
+Garage-pilot design plus the software in this repo. Dashed grey boxes are **IDEA / planned**; nothing in the loop is wet yet. Also as [SVG](docs/media/system-diagram.svg).
+
+```mermaid
+flowchart TB
+  classDef bio fill:#e8f5e9,stroke:#2e7d32,color:#1b3a1e
+  classDef water fill:#e3f2fd,stroke:#1565c0,color:#0d2a4a
+  classDef energy fill:#fff8e1,stroke:#ef8f00,color:#4a3000
+  classDef digital fill:#ede7f6,stroke:#5e35b1,color:#2a1650
+  classDef human fill:#fce4ec,stroke:#ad1457,color:#4a0c25
+  classDef idea fill:#f5f5f5,stroke:#9e9e9e,color:#555,stroke-dasharray: 5 4
+
+  subgraph INPUTS["Inputs"]
+    direction LR
+    RAIN["Rain make-up water<br/>attended top-up, lab test first"]:::water
+    RO["RO unit<br/>backup only"]:::water
+    GRID["20 A garage circuit<br/>after electrical safety check"]:::energy
+    BACKUP["Backup power<br/>keeps aeration + circulation on"]:::energy
+    SOLAR["Solar<br/>IDEA: optional, off by default"]:::idea
+  end
+
+  subgraph LOOP["Garage pilot loop (design; not wet yet)"]
+    direction LR
+    FISH["Fish tank<br/>10 comet goldfish (plan)"]:::bio
+    SETTLER["Settler + fines bag<br/>captures solids"]:::water
+    MBBR["K1 MBBR biofilter<br/>ammonia → nitrite → nitrate"]:::bio
+    DWC["Raised DWC plant beds<br/>plants take up nitrate"]:::bio
+    SUMP["Sump<br/>cleaned water"]:::water
+    WORMS["Worm bins (side stream)<br/>solids → castings, no leachate return"]:::bio
+    FISH -- "waste + ammonia" --> SETTLER --> MBBR -- "nutrients" --> DWC --> SUMP
+    SUMP -- "one pump: clean water back" --> FISH
+    SETTLER -- "dewatered sludge" --> WORMS
+  end
+
+  subgraph SOFTWARE["Software in this repo (SIM today)"]
+    direction LR
+    SENSORS["Sensors: pH, DO, temp, levels<br/>today: tools/fake_sensor.py (SIM)"]:::digital
+    API["Pilot API<br/>POST /telemetry + heartbeat check"]:::digital
+    ADVISOR["Grok advisor<br/>MOCK rules or LIVE Grok"]:::digital
+    SAFETY["Safety layer<br/>clamps / blocks, logs why"]:::digital
+    DASH["Dashboard<br/>GET /dashboard"]:::digital
+    SENSORS -- "5-min heartbeat" --> API --> ADVISOR --> SAFETY --> DASH
+  end
+
+  HUMAN["Human decides and acts<br/>software never actuates"]:::human
+  MQTT["Real ESP32 sensors + MQTT bridge<br/>planned"]:::idea
+  NODE["40-ft high-cube node<br/>IDEA: after MEASURED pilot data"]:::idea
+
+  RAIN -.-> SUMP
+  RO -. "if needed" .-> SUMP
+  GRID -- "pump + air" --> SUMP
+  BACKUP -. "outage" .-> SUMP
+  SOLAR -.-> BACKUP
+  DWC -. "readings" .-> SENSORS
+  MQTT -.-> API
+  DASH --> HUMAN
+  HUMAN -. "manual feed, top-up, tests" .-> FISH
+  HUMAN -. "real data first" .-> NODE
+```
+
 ### Repository map
 
-- `api/` — tested garage-pilot planning API (FastAPI); `configs/` — its labeled parameters; `tests/` — pytest suite; `tools/` — loopback smoke test
+- `api/` — tested garage-pilot planning API (FastAPI): simulator, alarms, `advisor/` (Grok advisor + safety layer), `telemetry.py` (heartbeat ingest), `static/dashboard.html`; `configs/` — its labeled parameters; `tests/` — pytest suite
+- `tools/` — `fake_sensor.py` (SIM heartbeat sender), `mqtt_bridge.py` (optional MQTT → API example), `smoke_local.py` (loopback HTTP smoke test)
+- `docs/media/` — dashboard demo GIF and system diagram
 - `simulations/` — Python teaching models and a notebook ([map](simulations/README.md))
 - `docs/` — philosophy, checklists, roadmaps, integration notes (pre-Nov 2026 docs carry a "superseded" banner)
 - `designs/` — layout / homestead sketches (IDEA)
@@ -172,7 +253,7 @@ EcoForge materials are provided **AS IS** for experimental, educational, and ope
 ## Get involved
 
 - Fork and prototype your own small node
-- Open issues / PRs (code, docs, sims, corrections)
+- Open issues / PRs (code, docs, sims, corrections) — start with [CONTRIBUTING.md](CONTRIBUTING.md)
 - Prefer MEASURED corrections over louder claims
 
 **Current priorities:** garage pilot MEASURED data, sensor/MQTT examples, honest BOM refresh, Container 1 sequencing.
