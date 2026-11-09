@@ -1,7 +1,7 @@
 """Garage Pilot v2 local-only planning API. Not a hardware controller."""
 from typing import Annotated, Literal
 import base64
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
@@ -9,6 +9,7 @@ from .configuration import load_config, values
 from .nutrient_model import run_simulation, plot_png
 from .power import power_budget
 from .alarms import evaluate
+from .telemetry import STORE, StoreFull
 
 C = load_config()
 P = values(C['power'])
@@ -108,3 +109,61 @@ def budget(req: PowerRequest):
 @app.post('/alarms')
 def alarms(req: AlarmRequest):
     return evaluate(load_config(),req)
+
+
+# --- Sensor heartbeat telemetry (SIM demo path; in-memory only) -------------------------
+
+SensorId = Annotated[str, Field(pattern=r'^[A-Za-z0-9_.-]{1,64}$')]
+
+class TelemetryReading(Request):
+    sensor_id: SensorId
+    label: Literal['SIM','MEASURED','ASSUME'] = 'SIM'
+    source: str = Field(default='Unspecified sender', max_length=200)
+    timestamp: str | None = Field(default=None, max_length=40, description='Sender clock, informational only')
+    interval_seconds: Annotated[float, Field(ge=0.1, le=3600)] = values(C['alarms'])['heartbeat_seconds']
+    pH: Annotated[float, Field(ge=0,le=14)] | None = None
+    temp_C: Annotated[float, Field(ge=-10,le=50)] | None = None
+    DO_mg_L: Annotated[float, Field(ge=0,le=30)] | None = None
+    TAN_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    nitrite_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    nitrate_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    KH_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    flow_L_h: Annotated[float, Field(ge=0,le=100000)] | None = None
+    water_levels_pct: dict[SensorId, Percent] | None = Field(default=None, max_length=20)
+
+@app.post('/telemetry', status_code=201)
+def telemetry_ingest(reading: TelemetryReading):
+    try:
+        record = STORE.add(reading.model_dump(exclude_none=True))
+    except StoreFull as exc:
+        raise HTTPException(status_code=507, detail=str(exc))
+    return {'accepted': True, 'sensor_id': record['sensor_id'], 'label': record['label'],
+            'received_at_unix': record['received_at_unix'],
+            'note': 'Stored in process memory only; no actuation, forwarding or disk write'}
+
+@app.get('/telemetry/latest')
+def telemetry_latest():
+    return STORE.latest()
+
+@app.get('/telemetry/history')
+def telemetry_history(sensor_id: SensorId | None = None, limit: Annotated[int, Query(ge=1, le=500)] = 100):
+    rows = STORE.history(sensor_id, limit)
+    return {'label': 'SIM' if all(r.get('label') == 'SIM' for r in rows) else 'MIXED',
+            'count': len(rows), 'rows': rows}
+
+STATE_FIELDS = ('pH','temp_C','DO_mg_L','TAN_mg_L','nitrite_mg_L','nitrate_mg_L','KH_mg_L')
+
+def state_from_telemetry():
+    """Most recent value of each field across sensors; unknown fields stay absent."""
+    latest = STORE.latest()
+    sensors = sorted(latest['sensors'].values(), key=lambda r: r['received_at_unix'])
+    state, levels, labels = {}, {}, set()
+    for r in sensors:
+        labels.add(r.get('label'))
+        for k in STATE_FIELDS:
+            if k in r: state[k] = r[k]
+        levels.update(r.get('water_levels_pct') or {})
+    if levels: state['water_levels_pct'] = levels
+    state['heartbeat_stale'] = latest['any_stale'] if sensors else None
+    state['data_label'] = labels.pop() if len(labels) == 1 else ('MIXED' if labels else 'NONE')
+    return state

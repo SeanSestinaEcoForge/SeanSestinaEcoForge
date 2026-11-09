@@ -1,0 +1,2 @@
+# Optional: MQTT bridge example only (tools/mqtt_bridge.py). Not needed for sims, API, tests or CI.
+paho-mqtt>=2,<3
