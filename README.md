@@ -47,7 +47,7 @@ No physical EcoForge node has produced measured surplus yet. Numbers below are *
 | First fish (pilot) | 10 comet goldfish | IDEA / plan | Sentinels; species for the full node compared later |
 | Full-node fish | tilapia hybrid candidate | IDEA | Thesis preference; **not locked** — garage pilot decides |
 
-Sources for the labeling rule and protocol bounds live locally today; public protocol stubs: [docs/Phase1_Checklist.md](docs/Phase1_Checklist.md), [docs/Phase2_Checklist.md](docs/Phase2_Checklist.md), [docs/Simulation-Roadmap.md](docs/Simulation-Roadmap.md).
+The full measurement protocol lives locally today. Its pilot alarm thresholds are public, each with label and source, in [configs/pilot-v2.json](configs/pilot-v2.json). Older planning docs (pre-Nov 2026, marked superseded): [docs/Phase1_Checklist.md](docs/Phase1_Checklist.md), [docs/Phase2_Checklist.md](docs/Phase2_Checklist.md), [docs/Simulation-Roadmap.md](docs/Simulation-Roadmap.md).
 
 ---
 
@@ -58,18 +58,18 @@ I have no degree in engineering, biology, or agriculture. I work by finding a ha
 What exists today:
 
 1. **An honest design system** — every number labeled MEASURED, QUOTED, SIM, ASSUME, IDEA, or CALC so nobody confuses a hope with a result.
-2. **Public simulations** you can run — nutrient/vermiponics models and a biogas digestion ODE:
+2. **A tested garage-pilot planning simulator** — FastAPI app with a dissolved-nitrogen model, power budget and protocol alarm rules; every parameter labeled with its source; 77 automated tests (MEASURED *software* result, not physical validation): [api/](api/README.md), [configs/pilot-v2.json](configs/pilot-v2.json), [tests/](tests/test_pilot_api.py)
+3. **Public simulations** you can run — nutrient/vermiponics teaching models and a biogas digestion ODE ([simulations map](simulations/README.md)):
    - [simulations/aquaponics_vermiponics_enhanced_ph_alk.py](simulations/aquaponics_vermiponics_enhanced_ph_alk.py)
    - [simulations/sim_biogas_digestion.py](simulations/sim_biogas_digestion.py)
    - [simulations/energy_basic.py](simulations/energy_basic.py)
-   - [docs/Simulation-Roadmap.md](docs/Simulation-Roadmap.md)
-3. **Blueprints, BOMs, and ops docs** — [Master-BOM-All-Tiers.md](Master-BOM-All-Tiers.md), [docs/](docs/), [designs/](designs/)
-4. **System visuals** — container cutaway, isometric, BOM exploded, Earth/Mars framing:
+4. **Blueprints, BOMs, and ops docs** — [Master-BOM-All-Tiers.md](Master-BOM-All-Tiers.md), [docs/](docs/), [designs/](designs/)
+5. **System visuals** — container cutaway, isometric, BOM exploded, Earth/Mars framing:
    - [images/ecoforge-container-cutaway.png](images/ecoforge-container-cutaway.png)
    - [images/ecoforge-isometric-diagram.png](images/ecoforge-isometric-diagram.png)
    - [images/ecoforge-bom-exploded.png](images/ecoforge-bom-exploded.png)
-5. **A measured garage pilot ready to build** — floor, power path, rain tank, and layout taped; electrical safety gate before water; goldfish first. (Pilot package is local until the next public release.)
-6. **Earlier family proof of agency** — wiring a whole house with family crew, end to end.
+6. **A measured garage pilot ready to build** — floor, power path, rain tank, and layout taped; electrical safety gate before water; goldfish first. (The planning simulator above is public; the rest of the pilot package stays local until the next public release.)
+7. **Earlier family proof of agency** — wiring a whole house with family crew, end to end.
 
 People say this is too good to be true. That is why the garage pilot exists: prove it with data, not promises.
 
@@ -137,17 +137,29 @@ python simulations/aquaponics_vermiponics_enhanced_ph_alk.py
 python simulations/sim_biogas_digestion.py
 ```
 
-Optional API stub: [api/main.py](api/main.py) (development only; not a production control system).
+Each sim prints its results (all **SIM**) and saves any plot to `outputs/`; nothing blocks on a plot window (add `--show` to open one).
+
+### Run the tested garage-pilot API
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest -q                                   # 77 tests
+python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
+```
+
+Then open `http://127.0.0.1:8000/docs`. Details and example requests: [api/README.md](api/README.md). Development and planning only — not a production control system.
 
 ### Repository map
 
-- `docs/` — philosophy, checklists, roadmaps, integration notes
-- `simulations/` — Python models and notebooks
-- `designs/` — layout / homestead sketches
+- `api/` — tested garage-pilot planning API (FastAPI); `configs/` — its labeled parameters; `tests/` — pytest suite; `tools/` — loopback smoke test
+- `simulations/` — Python teaching models and a notebook ([map](simulations/README.md))
+- `docs/` — philosophy, checklists, roadmaps, integration notes (pre-Nov 2026 docs carry a "superseded" banner)
+- `designs/` — layout / homestead sketches (IDEA)
 - `progress/` — dated status updates
 - `images/` — diagrams and reference photos
-- `api/` — FastAPI stub
+- `src/` — optional Grok/xAI helpers (`pip install -r requirements-grok.txt`; need your own `XAI_API_KEY`) and the sensor logger stub
 - `chaos-examples/` — example simulation outputs
+- `archive/` — duplicates and superseded material kept for history
 
 ---
 
