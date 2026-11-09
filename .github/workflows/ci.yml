@@ -65,8 +65,27 @@ jobs:
           if [ "$code" -ne 2 ]; then echo "$script exited $code (expected clean exit 2)"; exit 1; fi
         done
 
-    - name: Pytest (pilot API)
+    - name: MQTT bridge example exits cleanly without the optional paho-mqtt
+      run: |
+        set +e
+        timeout 30 python tools/mqtt_bridge.py
+        code=$?
+        set -e
+        if [ "$code" -ne 2 ]; then echo "mqtt_bridge.py exited $code (expected clean exit 2)"; exit 1; fi
+
+    - name: Pytest (pilot API, advisor safety layer, telemetry)
       run: python -m pytest -q
 
-    - name: Loopback HTTP smoke test (pilot API)
+    - name: Dashboard demo (README commands, shortened interval)
+      run: |
+        python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 &
+        for i in $(seq 1 50); do curl -fs http://127.0.0.1:8000/health >/dev/null && break; sleep 0.2; done
+        timeout 60 python tools/fake_sensor.py --interval 0.2 --count 5 --scenario do-drop
+        curl -fs http://127.0.0.1:8000/dashboard | grep -q "SIMULATION"
+        curl -fs http://127.0.0.1:8000/telemetry/latest | grep -q '"pilot-fake-01"'
+        curl -fs -X POST http://127.0.0.1:8000/advisor/suggest -H 'Content-Type: application/json' \
+          -d '{"use_latest_telemetry":true,"feed_g_day":5}' | grep -q '"executed":false'
+        kill %1
+
+    - name: Loopback HTTP smoke test (pilot API, telemetry, advisor, dashboard)
       run: timeout 120 python tools/smoke_local.py

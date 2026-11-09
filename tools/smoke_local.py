@@ -60,7 +60,20 @@ def main():
             assert any(e['code']=='heartbeat:air' for e in alarm['events'])
             assert 'core circulation' in str(alarm)
             (OUT/'alarms-sample.json').write_text(json.dumps(alarm,indent=2)+'\n')
-            spec=hit('GET','/openapi.json');assert '/power-budget' in spec['paths']
+            # Heartbeat path: run the fake SIM sensor briefly against this server.
+            subprocess.run([sys.executable,'tools/fake_sensor.py','--url',url,'--interval','0.2','--count','3'],
+                           cwd=ROOT,check=True,timeout=60,stdout=subprocess.DEVNULL)
+            latest=hit('GET','/telemetry/latest')
+            assert latest['sensors']['pilot-fake-01']['heartbeat_status']=='OK' and latest['label']=='SIM'
+            assert hit('GET','/telemetry/history?limit=10')['count']==3
+            advice=hit('POST','/advisor/suggest',{'use_latest_telemetry':True,'feed_g_day':5,'include_safety_demo':True})
+            assert advice['label']=='MOCK' and advice['executed'] is False and advice['safety_counts']['BLOCKED']>=3
+            (OUT/'advisor-sample.json').write_text(json.dumps(advice,indent=2)+'\n')
+            assert hit('GET','/advisor/limits')['feed_cap_g_day']['value']==15
+            with urlopen(url+'/dashboard',timeout=30) as r:
+                assert r.status==200 and b'SIMULATION' in r.read()
+                report['checks'].append({'method':'GET','path':'/dashboard','HTTP_status':r.status})
+            spec=hit('GET','/openapi.json');assert '/power-budget' in spec['paths'] and '/advisor/suggest' in spec['paths']
             report['sample']={'label':'SIM','days':result['inputs']['days'], 'mass_balance_residual_g_N':result['mass_balance']['residual_g'],
                               'final':result['rows'][-1]}
             report['outcome']='ALL HTTP CHECKS PASSED; server stopped after verification'
