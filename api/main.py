@@ -9,6 +9,7 @@ from .configuration import load_config, values
 from .nutrient_model import run_simulation, plot_png
 from .power import power_budget
 from .alarms import evaluate
+from .advisor import advise, safety_limits
 from .telemetry import STORE, StoreFull
 
 C = load_config()
@@ -167,3 +168,43 @@ def state_from_telemetry():
     state['heartbeat_stale'] = latest['any_stale'] if sensors else None
     state['data_label'] = labels.pop() if len(labels) == 1 else ('MIXED' if labels else 'NONE')
     return state
+
+# --- Grok advisor demo (suggests only; never actuates) ----------------------------------
+
+class AdvisorState(Request):
+    data_label: Literal['MEASURED','SIM','ASSUME','MIXED','NONE'] = 'ASSUME'
+    pH: Annotated[float, Field(ge=0,le=14)] | None = None
+    temp_C: Annotated[float, Field(ge=-10,le=50)] | None = None
+    DO_mg_L: Annotated[float, Field(ge=0,le=30)] | None = None
+    TAN_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    nitrite_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    nitrate_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    KH_mg_L: Annotated[float, Field(ge=0,le=1000)] | None = None
+    water_levels_pct: dict[SensorId, Percent] | None = Field(default=None, max_length=20)
+    feed_g_day: Annotated[float, Field(ge=0,le=100)] | None = None
+    heartbeat_stale: bool | None = None
+
+class AdvisorRequest(Request):
+    mode: Literal['mock','live'] = 'mock'
+    model: str | None = Field(default=None, max_length=80, pattern=r'^[A-Za-z0-9_.:-]+$')
+    state: AdvisorState | None = None
+    use_latest_telemetry: bool = False
+    feed_g_day: Annotated[float, Field(ge=0,le=100)] | None = Field(
+        default=None, description='Current feed rate; used with use_latest_telemetry (telemetry has no feed channel)')
+    include_safety_demo: bool = False
+
+@app.post('/advisor/suggest')
+def advisor_suggest(req: AdvisorRequest):
+    if req.use_latest_telemetry:
+        state = state_from_telemetry()
+        if req.state:  # explicit values override telemetry
+            state.update(req.state.model_dump(exclude_none=True, exclude={'data_label'}))
+    else:
+        state = (req.state or AdvisorState()).model_dump(exclude_none=True)
+    if req.feed_g_day is not None:
+        state['feed_g_day'] = req.feed_g_day
+    return advise(state, mode=req.mode, model=req.model, include_safety_demo=req.include_safety_demo)
+
+@app.get('/advisor/limits')
+def advisor_limits():
+    return safety_limits()
