@@ -15,7 +15,7 @@
 
 **Zone A – Central Command & Living Core** (3–5 acres)  
 - 3–5 × 40ft container nodes  
-- Premium Engineering Hub building (2,500 sq ft workshop + Optimus/Grok lab + control room)  
+- Premium Engineering Hub building (2,500 sq ft workshop + Grok / automation lab + control room)  
 - Main residence addition  
 - Primary Mars bay greenhouse cluster (800–1,200 sq ft)
 

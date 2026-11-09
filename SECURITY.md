@@ -6,14 +6,14 @@ We take security seriously and appreciate responsible disclosure of vulnerabilit
 
 ## Supported Versions
 
-We actively maintain and provide security updates for the following versions:
+No tagged releases yet. Security fixes land on the **main** branch only.
 
-| Version   | Supported          | Security Fixes Until |
-|-----------|--------------------|----------------------|
-| main      | Yes (latest)       | Ongoing              |
-| v1.x      | Yes                | TBD                  |
+| Version | Supported | Notes |
+|---------|-----------|-------|
+| main    | Yes       | Current development branch; use this |
+| older tags / forks | No | None published yet |
 
-Older versions or forks may not receive security updates. Please upgrade to the latest release or main branch.
+When a first public release is tagged, this table will list which release lines get fixes.
 
 ## Reporting a Vulnerability
 

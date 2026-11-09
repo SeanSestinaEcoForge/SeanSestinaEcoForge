@@ -68,7 +68,7 @@ All physical work carries real risks (see full [DISCLAIMER.md](../DISCLAIMER.md)
 | First local surplus           | CSA or P2P drop by Day 30 | Documented distribution               |
 
 ## Mars Analog Notes
-- Treat the container as a **Starship bay mock** — log how vermiponics/RO performs with simulated regolith-amended feed or reduced pressure.  
+- Treat the container as a **container bay mock** — log how vermiponics/RO performs with simulated regolith-amended feed or reduced pressure.  
 - Use Grok to run “Mars mode” comparisons (gravity, atmosphere, radiation shielding implications).  
 - Document lessons for Phase 3 and the Mars R&D roadmap (see `docs/06_Mars_Analog_RD_Roadmap.md`).
 
@@ -78,6 +78,6 @@ All physical work carries real risks (see full [DISCLAIMER.md](../DISCLAIMER.md)
 - **Weekly Reviews**: Adjust media/feeds if fouling occurs; inspect for leaks, structural integrity, or pest issues.  
 - **Compliance**: All electrical/plumbing work inspected where required. Biogas handling follows local safety codes.  
 
-**Next**: Phase 3 — Optimus task chaining, multi-node expansion, full homestead hybrid, and deeper Appalachia/Mars analog pilots.  
+**Next**: Phase 3 — automation task chaining, multi-node expansion, full homestead hybrid, and deeper Appalachia/Mars analog pilots.  
 
 Forge nonstop till reality. Abundance is built one safe, documented step at a time. ❤️🥷🌱⚡️🪐♾️

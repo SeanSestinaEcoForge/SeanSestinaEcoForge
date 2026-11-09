@@ -6,7 +6,7 @@
 **Status**: Locked core document in Master Archive v1.6
 
 **Purpose**  
-Official folder structure for the live repo at https://github.com/SeanSestinaEcoForge/SeanSestinaEcoForge (or your chosen variant). Designed for 1–2 person operation, organic growth, instant retrieval, and Grok/Optimus/Starlink integration.
+Official folder structure for the live repo at https://github.com/SeanSestinaEcoForge/SeanSestinaEcoForge (or your chosen variant). Designed for 1–2 person operation, organic growth, instant retrieval, and Grok / Starlink / automation integration.
 
 ### Root-Level StructureSeanSestinaEcoForge/
 ├── README.md                          # Executive overview, quick-start, vision
@@ -44,13 +44,13 @@ Official folder structure for the live repo at https://github.com/SeanSestinaEco
 - 12_Scrutiny_Resistant_Reference.md  
 - 13_90Day_Validation_Test_Plan.md  
 - 14_Monitoring_Spreadsheet_Template.md  
-- 15_Grok_Optimus_Monitoring_Integration.md  
+- 15_Grok_automation_Monitoring_Integration.md  
 - 16_Unified_Integration_Architecture.md  
 - 17_GitHub_Repo_Structure.md  
 
 **code/**  
 - grok-integration/ (analysis scripts)  
-- optimus-tasks/ (command sequences)  
+- automation-tasks/ (command sequences, IDEA)  
 - api/ (internal REST API)  
 - dashboard/ (web UI)  
 - monitoring/ (sensor scripts)  

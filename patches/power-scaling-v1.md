@@ -23,7 +23,7 @@ Add resilient, scalable micro gas turbines (MGTs) for peak loads, outages, and g
 
 **Mars Relevance**  
 - Methane/CO₂ reformer adaptable for ISRU  
-- Gang modularity ideal for Starship-delivered clusters  
+- Gang modularity ideal for modular / container-delivered clusters  
 - Practice for 300 MW+ colony power scaling
 
 **Key Specs (Ohio context)**  

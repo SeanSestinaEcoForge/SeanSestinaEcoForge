@@ -38,7 +38,7 @@ Complete review of archive integrity, technical completeness, economic viability
 
 ### 4. Operations & Maintenance Readiness
 - Daily labor: 1–3 hours per node (1–2 operators).  
-- Hub scale: 4–8 hours/day until automation/Optimus scales.  
+- Hub scale: 4–8 hours/day until automation scales.  
 - Checklist (Document #4) covers all parameters and thresholds.  
 - **Result**: Operator-ready for long-term function.
 
@@ -52,7 +52,7 @@ Complete review of archive integrity, technical completeness, economic viability
 - Site-specific spring variability → cistern + RO buffer.  
 - Biofloc/nitrification instability → staged inoculation + monitoring.  
 - Market access for excess → start local/direct.  
-- Labor load → prioritize automation (Grok + Optimus).  
+- Labor load → prioritize automation (Grok + automation).  
 - **Overall**: Low risk — system designed for resilience.
 
 **Final Audit Verdict**  

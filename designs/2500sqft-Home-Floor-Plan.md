@@ -21,7 +21,7 @@ EcoForge 8–10 Acre Homestead Ecosystem Layout (South at bottom)
 
           [Engineering Production Hub – 40×60 ft Workshop]
                   (CNC plasma, large-format 3D printer, pyrolysis,
-                   assembly jigs, testing bay, parts storage, Optimus charging)
+                   assembly jigs, testing bay, parts storage, equipment charging)
                            ~150 ft north of living cluster (noise buffer)
 
           [Shared Solar Field & Powerwall Bank – 24 kW array + 81 kWh]

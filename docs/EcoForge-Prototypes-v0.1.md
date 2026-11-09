@@ -41,7 +41,7 @@ EcoForge is a family — not a solo project. This section is dedicated to protot
 Anyone can propose/add:  
 - New vermi media mixes (higher biochar %, alternative worms).  
 - Grok agent enhancements (advanced task queues, predictive nutrient modeling).  
-- Optimus integration stubs (specific tool holders, transfer workflows).  
+- automation integration stubs (specific tool holders, transfer workflows).  
 - Alternative energy add-ons (micro-hydro, wind micro-turbines).  
 - Mars-specific adaptations (regolith sim bays, partial-gravity tests).  
 - Mini Boring geothermal refinements (smaller diameter, electric-only versions).  

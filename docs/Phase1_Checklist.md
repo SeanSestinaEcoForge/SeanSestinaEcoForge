@@ -15,7 +15,7 @@ Create a fully documented, forkable, Grok-accelerated foundation that proves 95â
 - [x] Complete Master-BOM-All-Tiers.md with sourcing notes, cost tiers, and exploded views
 - [x] Document full system flows (vermiponics â†’ biogas â†’ RO â†’ energy storage) in designs/ and images/
 - [x] Create designs/homestead-site-layout.md with ecosystem layout and engineering hub placement
-- [x] Add Hub-Fab-Tools.md (CNC, 3D printer, Optimus-ready fab notes)
+- [x] Add Hub-Fab-Tools.md (CNC, 3D printer, automation-ready fab notes)
 - [x] Write docs/master-protocol.md for operational governance
 - [ ] Add any missing visuals (isometric views, nutrient/energy flow diagrams) to /images/
 
@@ -36,7 +36,7 @@ Create a fully documented, forkable, Grok-accelerated foundation that proves 95â
 
 ### 4. Grok & AI Integration (Ara Voice Agents)
 - [x] Create Grok-Ara-Integration-Plan.md (reasoning for sim tuning, realtime voice, tool calling)
-- [x] Prepare my-prompt.md and test prompts for warm, conversational Ara agents
+- [x] Prepare example Grok prompt templates and test prompts for warm, conversational Ara agents
 - [x] Set up xAI API key and test basic calls (awaiting credits top-up for heavy usage)
 - [x] Outline Grok agent roles: sim explainer, optimizer, safety monitor, operator guide
 - [ ] Develop ForgeHub-UI-Concept.md (live dashboard for pH, TDS, energy, flow)

@@ -4,7 +4,7 @@
 
 **Finalized March 20, 2026** – All tiers locked (container, 2500 sq ft home, hub with 3D/CNC).  
 Single source of truth for every build.
-EcoForge Complete Vision & Consistency Guide – v3 (March 20, 2026)Core Principle: Open-source, Grok-optimized, Optimus-automated, Starship-scalable closed-loop homestead nodes. Earth abundance (deflationary basics collapse) + Mars readiness (ECLSS analogs). Humanity first.
+EcoForge Complete Vision & Consistency Guide – v3 (March 20, 2026)Core Principle: Open-source, Grok-assisted, automation-ready, modular closed-loop homestead nodes. Earth abundance (deflationary basics collapse) + Mars readiness (ECLSS analogs). Humanity first.
 Repo Truth Source: https://github.com/SeanSestinaEcoForge/SeanSestinaEcoForge
 Status: Phase 1 (blueprint/sims/API) COMPLETE  | Phase 2 (family-land pilot node + home) NEXT1. System-Wide Locked Elements (Consistent Across All Builds)Metrics (Supernova v3):  Water/nutrient recovery: ≥95% (target 96.5%)  
 Excess TDS: 4.5–5.8 ppm (<6 ppm)  
@@ -50,7 +50,7 @@ EcoForge 8–10 Acre Homestead Ecosystem Layout (South at bottom)
 
           [Engineering Production Hub – 40×60 ft Workshop]
                   (CNC plasma, large-format 3D printer, pyrolysis,
-                   assembly jigs, testing bay, parts storage, Optimus charging)
+                   assembly jigs, testing bay, parts storage, equipment charging)
                            ~150 ft north of living cluster (noise buffer)
 
           [Shared Solar Field & Powerwall Bank – 24 kW array + 81 kWh]

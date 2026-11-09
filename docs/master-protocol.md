@@ -2,7 +2,7 @@
 
 > **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
 
-All protocols are modular, versioned, cross-linked, and fork-ready. Core theme: closed-loop aquaponics + BSFL side-loop + vermicomposting polish + biogas closure + Grok nervous system + Optimus readiness + Mars hardening.
+All protocols are modular, versioned, cross-linked, and fork-ready. Core theme: closed-loop aquaponics + BSFL side-loop + vermicomposting polish + biogas closure + Grok nervous system + automation readiness + Mars hardening.
 
 Root-Level Files
 - README.md → Hero overview + vision (paste your Final Vision thread content here) + structure tree + quick-start + license (MIT) + badges.
@@ -35,7 +35,7 @@ protocols/v1.1/ (Core modules)
    Sensor dashboard templates, predictive packs (fouling v2.1, biogas forecaster), voice scripts.
 
 4. maintenance-swarm.md  
-   Optimus primitives: grip sequences, flush paths, harvest cycles.
+   Automation primitives (IDEA): grip sequences, flush paths, harvest cycles.
 
 5. biochar_production.md (New – from recent)  
    Double barrel retort primary; cone pit test; post-processing (crush, charge).

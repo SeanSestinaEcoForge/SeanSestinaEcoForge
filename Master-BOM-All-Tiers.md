@@ -42,7 +42,7 @@ Total: **$68,000 – $92,000** (mid ~$80k)
 | Solar + Battery                    | 8 kW Tesla roof array + 2× Powerwall 3 (27 kWh)     | $38,000 – $52,000     |
 | Geothermal Climate Battery         | GAHT horizontal earth tubes + blower                 | $2,000 – $5,000       |
 | Vermiponics + Biochar + RO + Biogas| 4 bays (35% biochar), premium RO, 500L digester     | $4,000 – $8,000       |
-| Sensors/Grok Hub + Optimus prep    | Atlas suite, MQTT/FastAPI, dock rails               | $800 – $1,500         |
+| Sensors / Grok Hub + dock rails    | Atlas suite, MQTT/FastAPI, dock rails               | $800 – $1,500         |
 | Misc (permits, crane, electrical)  | Full pro wiring + testing                            | $3,000 – $5,000       |
 | **Tier 1 Total**                   | Ready for first flow + CSA drops                     | **$68k – $92k**       |
 

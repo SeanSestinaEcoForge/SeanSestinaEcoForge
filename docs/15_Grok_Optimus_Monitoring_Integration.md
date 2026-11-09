@@ -1,4 +1,4 @@
-# EcoForge Grok + Optimus Monitoring & Control Integration Plan
+# EcoForge Grok + Automation Monitoring & Control Integration Plan
 
 > **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
 
@@ -14,7 +14,7 @@ Transform the basic monitoring spreadsheet into a real-time, AI-augmented, robot
   - Predictive alerts and optimization suggestions  
   - Voice interface for operators  
 
-- **Optimus Layer**: Physical robot tasks  
+- **Automation Layer (IDEA)**: Physical robot tasks  
   - Duckweed harvest (20–50% daily)  
   - Filter cleaning  
   - Water sampling  
@@ -31,23 +31,23 @@ Transform the basic monitoring spreadsheet into a real-time, AI-augmented, robot
   - Live gauges (color-coded)  
   - Trend charts  
   - Grok insights  
-  - Optimus task queue  
+  - automation task queue  
 
 ### 2. Phased Rollout
 **Phase 1 – Container 1 (Months 1–3)**  
 - Spreadsheet + local Grok analysis + basic dashboard  
 - Starlink optional (USB sync)  
-- Optimus: voice/tele-op for harvest/sampling  
+- Automation: voice/tele-op for harvest/sampling  
 
 **Phase 2 – Full Intelligence (Months 4–6)**  
 - Full Grok API + real-time insights  
 - Starlink live for GitHub sync  
-- Optimus expanded to daily routines  
+- automation expanded to daily routines  
 
 **Phase 3 – Hub Scaling (Months 6–18)**  
 - Multi-node dashboard  
 - Starlink for corporate demos  
-- Optimus fleet coordination  
+- automation fleet coordination  
 
 ### 3. Security & Off-Grid Hardening
 - Local-first (no cloud required)  
@@ -56,6 +56,6 @@ Transform the basic monitoring spreadsheet into a real-time, AI-augmented, robot
 - Optional Starlink sync (VPN tunnel)  
 - Fail-safe: Spreadsheet works if dashboard/API down  
 
-**Retrieval Command**: “Pull EcoForge Grok Optimus Monitoring Integration” or “Show EcoForge Document 15”
+**Retrieval Command**: “Pull EcoForge Grok Automation Monitoring Integration” or “Show EcoForge Document 15”
 
 This document is now the official intelligent control layer plan.

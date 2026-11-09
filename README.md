@@ -157,6 +157,8 @@ python tools/fake_sensor.py --interval 2 --count 60 --scenario do-drop
 
 While the fake sensor runs (2 minutes), open `http://127.0.0.1:8000/dashboard`. Everything on it is **SIM** or **MOCK**: a seeded fake sensor, the planning model and the rule-based advisor. Stop the server afterwards with `kill %1` (or run it in a second terminal and press Ctrl-C). No API key or internet needed.
 
+If port 8000 is already in use, start the API with `--port 8001` (or any free port) and point the fake sensor at it: `python tools/fake_sensor.py --url http://127.0.0.1:8001 --interval 2 --count 60 --scenario do-drop`.
+
 ### Run the tested garage-pilot API
 
 ```bash
@@ -169,7 +171,12 @@ Then open `http://127.0.0.1:8000/docs`. Details and example requests: [api/READM
 
 ### System diagram
 
-Garage-pilot design plus the software in this repo. Dashed grey boxes are **IDEA / planned**; nothing in the loop is wet yet. Also as [SVG](docs/media/system-diagram.svg).
+Garage-pilot design plus the software in this repo. Dashed grey boxes are **IDEA / planned**; nothing in the loop is wet yet.
+
+![System diagram: garage pilot loop, software path, planned solar/sensors/node](docs/media/system-diagram.svg)
+
+<details>
+<summary>Mermaid source (same diagram; may briefly show a spinner on GitHub)</summary>
 
 ```mermaid
 flowchart TB
@@ -227,6 +234,8 @@ flowchart TB
   HUMAN -. "manual feed, top-up, tests" .-> FISH
   HUMAN -. "real data first" .-> NODE
 ```
+
+</details>
 
 ### Repository map
 

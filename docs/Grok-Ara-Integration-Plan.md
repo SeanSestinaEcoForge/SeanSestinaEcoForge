@@ -38,7 +38,7 @@
   - Monitoring Agent: Watches sensors 24/7, alerts on drift.
   - Optimization Agent: Runs what-if branches (e.g., "What if feed reduced 20%?").
   - Recovery Agent: Triggers emergency protocols (e.g., 96.5% recovery fallback: flush + biochar boost).
-  - Optimus Escalation Agent: Future hook – chains tasks to Optimus robot (e.g., "Physically inspect bay 3").
+  - Automation Escalation Agent (future hook): Future hook – chains tasks to a future robot (e.g., "Physically inspect bay 3").
 - **Infinite Context Lock**:
   - Every Grok call injects full system state + history summary.
   - Recovery policy: If context exceeds limit → summarize + checkpoint (store in repo /docs/checkpoints/).
@@ -70,7 +70,7 @@
 1. **Current**: API key ready, /simulate endpoint live (throttled), Ara TTS test prompt working.
 2. **Next (Post-Credits)**: Full Grok-Ara loop (ESP32 → Grok → Ara voice alerts).
 3. **Phase 3**: Live dashboard integration (ForgeHub-UI-Concept.md) + agent spawning.
-4. **Phase 4**: Optimus chaining + multi-node scaling (Starship-ready).
+4. **Phase 4**: automation task chaining + multi-node scaling.
 
 ## 8. Dependencies & Credits
 - xAI Grok API key (console.x.ai)
