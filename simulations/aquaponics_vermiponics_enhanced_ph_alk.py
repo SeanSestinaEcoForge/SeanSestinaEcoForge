@@ -27,7 +27,7 @@ Prototype and build **at your own risk only**. Not for commercial replication wi
 Read the full LICENSE (MIT) and CONTRIBUTING.md for additional terms.
     
 """
-aquaponics-vermiponics-enhanced-ph-alk.py - EcoForge
+aquaponics_vermiponics_enhanced_ph_alk.py - EcoForge
 Enhanced aquaponics model with:
 - Temperature dependence (Q10 scaling)
 - Dissolved oxygen dynamics & crash thresholds
@@ -36,7 +36,7 @@ Enhanced aquaponics model with:
 
 Run:
     pip install -r ../requirements.txt
-    python aquaponics-vermiponics-enhanced-ph-alk.py
+    python aquaponics_vermiponics_enhanced_ph_alk.py
 
 Tune params (e.g. T, k_worm_base, k_reaer) to match your real system.
 """

@@ -12,7 +12,7 @@ A clear and concise description of what the problem is / what you'd like to see 
 
 **To Reproduce (if bug)**  
 Steps to reproduce the behavior:
-1. Run `python simulations/aquaponics-vermiponics-enhanced.py`
+1. Run `python simulations/aquaponics_vermiponics_enhanced_ph_alk.py`
 2. Change parameter X to Y
 3. See error Z
 

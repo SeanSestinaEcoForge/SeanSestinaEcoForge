@@ -59,8 +59,8 @@ What exists today:
 
 1. **An honest design system** — every number labeled MEASURED, QUOTED, SIM, ASSUME, IDEA, or CALC so nobody confuses a hope with a result.
 2. **Public simulations** you can run — nutrient/vermiponics models and a biogas digestion ODE:
-   - [simulations/aquaponics-vermiponics-enhanced-ph-alk.py](simulations/aquaponics-vermiponics-enhanced-ph-alk.py)
-   - [simulations/sim-biogas-digestion.py](simulations/sim-biogas-digestion.py)
+   - [simulations/aquaponics_vermiponics_enhanced_ph_alk.py](simulations/aquaponics_vermiponics_enhanced_ph_alk.py)
+   - [simulations/sim_biogas_digestion.py](simulations/sim_biogas_digestion.py)
    - [simulations/energy_basic.py](simulations/energy_basic.py)
    - [docs/Simulation-Roadmap.md](docs/Simulation-Roadmap.md)
 3. **Blueprints, BOMs, and ops docs** — [Master-BOM-All-Tiers.md](Master-BOM-All-Tiers.md), [docs/](docs/), [designs/](designs/)
@@ -110,7 +110,7 @@ One **40-ft high-cube** for fish + water treatment, with plant beds in a greenho
 - GAHT earth tubes **designed**; install timing still open
 - MQTT 5-minute heartbeat on critical sensors
 - Grok-assisted optimization once MEASURED streams exist ([docs/Grok-Ara-Integration-Plan.md](docs/Grok-Ara-Integration-Plan.md))
-- Dual-use framing: Earth homestead + Mars-analog life-support research ([docs/06_Mars_Analog_R&D_Roadmap.md](docs/06_Mars_Analog_R%26D_Roadmap.md))
+- Dual-use framing: Earth homestead + Mars-analog life-support research ([docs/06_Mars_Analog_RD_Roadmap.md](docs/06_Mars_Analog_RD_Roadmap.md))
 
 **Living BOM:** estimates only; nothing ordered. Public March 2026 tier table: [Master-BOM-All-Tiers.md](Master-BOM-All-Tiers.md). A tighter DIY living BOM is maintained locally and will replace the public table in a future release.
 
@@ -133,8 +133,8 @@ One **40-ft high-cube** for fish + water treatment, with plant beds in a greenho
 git clone https://github.com/SeanSestinaEcoForge/SeanSestinaEcoForge.git
 cd SeanSestinaEcoForge
 pip install -r requirements.txt
-python simulations/aquaponics-vermiponics-enhanced-ph-alk.py
-python simulations/sim-biogas-digestion.py
+python simulations/aquaponics_vermiponics_enhanced_ph_alk.py
+python simulations/sim_biogas_digestion.py
 ```
 
 Optional API stub: [api/main.py](api/main.py) (development only; not a production control system).

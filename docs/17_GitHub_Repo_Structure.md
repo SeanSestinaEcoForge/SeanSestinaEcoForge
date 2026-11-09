@@ -33,7 +33,7 @@ Official folder structure for the live repo at https://github.com/SeanSestinaEco
 - 03_Premium_Hub_Master_Site_Plan.md  
 - 04_Monthly_Operations_Checklist.md  
 - 05_Revenue_Sales_Playbook.md  
-- 06_Mars_Analog_R&D_Roadmap.md  
+- 06_Mars_Analog_RD_Roadmap.md  
 - 07_Thesis_Statement.md  
 - 08_White_Paper.md  
 - 09_Scientific_Paper.md  

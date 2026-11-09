@@ -68,7 +68,7 @@ All physical work carries real risks (see full [DISCLAIMER.md](../DISCLAIMER.md)
 ## Mars Analog Notes
 - Treat the container as a **Starship bay mock** — log how vermiponics/RO performs with simulated regolith-amended feed or reduced pressure.  
 - Use Grok to run “Mars mode” comparisons (gravity, atmosphere, radiation shielding implications).  
-- Document lessons for Phase 3 and the Mars R&D roadmap (see `docs/06_Mars_Analog_R&D_Roadmap.md`).
+- Document lessons for Phase 3 and the Mars R&D roadmap (see `docs/06_Mars_Analog_RD_Roadmap.md`).
 
 ## Ongoing Safety & Monitoring Baselines
 - **Alarms** (via Grok/ESP32): Permeate TDS >15 ppm (shutdown), pH outside 6–8, low/high flow, temp extremes, power anomalies.  

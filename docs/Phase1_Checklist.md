@@ -12,13 +12,13 @@ Create a fully documented, forkable, Grok-accelerated foundation that proves 95�
 - [x] Finalize v3 "Supernova" blueprint with full metrics (95–96.5% recovery, NH₃ <6 ppm, RO at 0.55 kWh/m³, 18.8 LMH flux, 400+ lbs/month food surplus for 10-person node)
 - [x] Complete Master-BOM-All-Tiers.md with sourcing notes, cost tiers, and exploded views
 - [x] Document full system flows (vermiponics → biogas → RO → energy storage) in designs/ and images/
-- [x] Create 2500sqft-Home-Floor-Plan.md with ecosystem layout and engineering hub placement
+- [x] Create designs/homestead-site-layout.md with ecosystem layout and engineering hub placement
 - [x] Add Hub-Fab-Tools.md (CNC, 3D printer, Optimus-ready fab notes)
-- [x] Write complete-v1.1-master-protocol-list.md for operational governance
+- [x] Write docs/master-protocol.md for operational governance
 - [ ] Add any missing visuals (isometric views, nutrient/energy flow diagrams) to /images/
 
 ### 2. Simulations & Modeling
-- [x] Build and validate ODE-based vermiponics nutrient cycle simulation (sim-aquaponics-nutrient-cycle.py)
+- [x] Build and validate ODE-based vermiponics nutrient cycle simulation (simulations/aquaponics_nutrient_cycle.py)
 - [x] Integrate RO model with energy calculations (target: 0.55 kWh/m³)
 - [x] Test biogas integration points and ammonia control (<6 ppm)
 - [x] Run sensitivity analyses (winter surplus, different scales, Mars regolith analogs)
