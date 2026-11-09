@@ -1,4 +1,13 @@
-import numpy as np
+"""Earth vs orbital solar yield stub (IDEA, cartoon multiplier; not a design number).
+
+Run: python simulations/space_solar.py   (saves outputs/earth_vs_orbital_solar.png)
+"""
+import sys
+from pathlib import Path
+
+import matplotlib
+if "--show" not in sys.argv:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 def solar_yield(base_watts: float, is_space: bool = False, glass_mass_kg: float = 10.0) -> tuple:
@@ -26,5 +35,10 @@ if __name__ == "__main__":
     plt.bar(labels, powers)
     plt.ylabel('Power Yield (W)')
     plt.title('Earth vs Orbital Solar Yield')
-    plt.savefig('earth_vs_orbital_solar.png')  # Save plot for README
-    plt.show()
+    out = Path("outputs") / "earth_vs_orbital_solar.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out)
+    print(f"Plot saved to {out}")
+    if "--show" in sys.argv:
+        plt.show()
+    plt.close()

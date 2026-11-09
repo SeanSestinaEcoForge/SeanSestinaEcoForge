@@ -1,25 +1,39 @@
-# examples/tool_calling_demo.py
-from src.core.xai_client import create_chat
-from xai_sdk.tools import tool
+"""Optional Grok tool-calling demo (needs xai_sdk + XAI_API_KEY).
 
-@tool
-def get_chp_metrics(power: float, fuel: str = "propane") -> dict:
-    """Get CHP performance metrics"""
-    from src.tools.energy import chp_efficiency_calc
-    return chp_efficiency_calc(power, fuel)
+Run from the repository root:  python examples/tool_calling_demo.py
+The CHP numbers come from a placeholder calculator (src/tools/energy.py), not MEASURED data.
+"""
+import sys
+from pathlib import Path
 
-chat = create_chat()
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.core.xai_client import GrokUnavailable, create_chat, run_cli  # noqa: E402
+from src.tools.energy import chp_efficiency_calc  # noqa: E402
 
-chat.register_tools([get_chp_metrics])
 
-# Fixed: dict instead of undefined 'user'
-chat.append({"role": "user", "content": "What are realistic CHP metrics for a 8kW propane system?"})
+def _demo():
+    try:
+        from xai_sdk.tools import tool
+    except ImportError as exc:
+        raise GrokUnavailable(
+            "Optional package 'xai_sdk' is not installed. Install it with: pip install -r requirements-grok.txt"
+        ) from exc
 
-response = chat.sample()
-print("Response:", response.content)
+    @tool
+    def get_chp_metrics(power: float, fuel: str = "propane") -> dict:
+        """Get CHP performance metrics (placeholder calculator)."""
+        return chp_efficiency_calc(power, fuel)
 
-if response.tool_calls:
-    print("\nTool calls made:", len(response.tool_calls))
-    for call in response.tool_calls:
-        result = call.execute()
-        print("Tool result:", result)
+    chat = create_chat()
+    chat.register_tools([get_chp_metrics])
+    chat.append({"role": "user", "content": "What are realistic CHP metrics for a 8kW propane system?"})
+    response = chat.sample()
+    print("Response:", response.content)
+    if response.tool_calls:
+        print("\nTool calls made:", len(response.tool_calls))
+        for call in response.tool_calls:
+            print("Tool result:", call.execute())
+
+
+if __name__ == "__main__":
+    run_cli(_demo)

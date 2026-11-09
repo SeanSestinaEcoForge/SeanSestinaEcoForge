@@ -1,6 +1,15 @@
+"""Simple 5-state aquaponics nutrient-cycle ODE (SIM, teaching model).
+
+Run from the repository root:
+    python simulations/aquaponics_nutrient_cycle.py          # prints finals, saves PNG to outputs/
+    python simulations/aquaponics_nutrient_cycle.py --show   # also open a plot window
+Parameters are ASSUME example values; outputs are SIM, not MEASURED.
+"""
+import argparse
+from pathlib import Path
+
 import numpy as np
 from scipy.integrate import odeint
-import matplotlib.pyplot as plt
 
 # Aquaponics Simulation Model
 # This is a simple ODE-based model for an aquaponics system.
@@ -106,29 +115,56 @@ solution = odeint(aquaponics_model, y0, t, args=(params,))
 # Unpack results
 F, P, A, I, N = solution.T
 
-# Plot results
-fig, axs = plt.subplots(3, 1, figsize=(10, 12))
-fig.suptitle('Aquaponics Simulation')
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="EcoForge simple aquaponics nutrient-cycle SIM")
+    parser.add_argument("--out", default=str(Path("outputs") / "aquaponics_nutrient_cycle.png"),
+                        help="PNG path ('' to skip saving)")
+    parser.add_argument("--show", action="store_true", help="open an interactive plot window")
+    args = parser.parse_args(argv)
 
-axs[0].plot(t, F, label='Fish Biomass (kg)')
-axs[0].plot(t, P, label='Plant Biomass (kg)')
-axs[0].set_ylabel('Biomass')
-axs[0].legend()
+    import matplotlib
+    if not args.show:
+        matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
 
-axs[1].plot(t, A, label='Ammonia (mg/L)')
-axs[1].plot(t, I, label='Nitrite (mg/L)')
-axs[1].plot(t, N, label='Nitrate (mg/L)')
-axs[1].set_ylabel('Nutrients')
-axs[1].legend()
+    print(f"Final values (day {t[-1]:.0f}) [SIM]:")
+    print(f"  Fish: {F[-1]:.2f} kg | Plants: {P[-1]:.2f} kg")
+    print(f"  Ammonia-N: {A[-1]:.2f} | Nitrite-N: {I[-1]:.2f} | Nitrate-N: {N[-1]:.2f} mg/L")
 
-axs[2].plot(t, A + I + N, label='Total N (mg/L)')
-axs[2].set_ylabel('Total Nitrogen')
-axs[2].set_xlabel('Time (days)')
-axs[2].legend()
+    # Plot results
+    fig, axs = plt.subplots(3, 1, figsize=(10, 12))
+    fig.suptitle('Aquaponics Simulation')
 
-plt.tight_layout()
-plt.show()
+    axs[0].plot(t, F, label='Fish Biomass (kg)')
+    axs[0].plot(t, P, label='Plant Biomass (kg)')
+    axs[0].set_ylabel('Biomass')
+    axs[0].legend()
 
-# To run: Save as aquaponics_sim.py and execute in Python environment with numpy, scipy, matplotlib.
+    axs[1].plot(t, A, label='Ammonia (mg/L)')
+    axs[1].plot(t, I, label='Nitrite (mg/L)')
+    axs[1].plot(t, N, label='Nitrate (mg/L)')
+    axs[1].set_ylabel('Nutrients')
+    axs[1].legend()
+
+    axs[2].plot(t, A + I + N, label='Total N (mg/L)')
+    axs[2].set_ylabel('Total Nitrogen')
+    axs[2].set_xlabel('Time (days)')
+    axs[2].legend()
+
+    plt.tight_layout()
+    if args.out:
+        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(args.out)
+        print(f"Plot saved to {args.out}")
+    if args.show:
+        plt.show()
+    plt.close(fig)
+
+
+
+if __name__ == "__main__":
+    main()
+
+# To run: python simulations/aquaponics_nutrient_cycle.py (needs numpy, scipy, matplotlib).
 # Tune parameters based on your real system (e.g., measure actual ammonia production).
 # Extensions: Add temperature dependence, pH effects, vermicomposting (e.g., extra organic breakdown term), or stochastic noise.

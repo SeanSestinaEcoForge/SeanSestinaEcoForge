@@ -1,5 +1,9 @@
-import numpy as np
+import os
+
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 
 time_days = np.linspace(0, 365, 365)
 initial_flow = 2.0
@@ -28,8 +32,10 @@ plt.ylabel('Flow Rate (L/h)')
 plt.title('EcoForge Drip Line Fouling Simulation')
 plt.legend()
 plt.grid(True)
-plt.savefig('fouling_plot.png')
+os.makedirs('outputs', exist_ok=True)
+plt.savefig(os.path.join('outputs', 'fouling_plot.png'))
 plt.close()
 
 print("Day 90 Base:", round(base_curve[90], 2))
 print("Day 90 PC + Clean:", round(clean_curve[90], 2))
+print("Plot saved to outputs/fouling_plot.png")

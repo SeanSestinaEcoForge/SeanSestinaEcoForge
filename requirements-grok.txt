@@ -1,0 +1,3 @@
+# Optional extras for the Grok/xAI helper scripts only (not needed for sims, API or tests).
+-r requirements.txt
+xai-sdk

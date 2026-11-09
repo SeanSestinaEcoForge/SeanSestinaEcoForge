@@ -1,5 +1,6 @@
-fastapi
-uvicorn[standard]
-pydantic
-matplotlib
-numpy
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+pydantic>=2.9,<3
+numpy>=2,<3
+scipy>=1.14,<2
+matplotlib>=3.9,<4

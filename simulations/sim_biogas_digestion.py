@@ -1,11 +1,19 @@
 """
 EcoForge Biogas / Anaerobic Digestion Simulation
 ODE-based model for methane production, digestate return, and integration with vermiponics.
+
+Labels: SIM teaching model; parameters are ASSUME household-scale examples, not MEASURED.
+Simplification: methane is not mass-coupled to organic-matter loss.
+
+Run from the repository root:
+    python simulations/sim_biogas_digestion.py            # prints results
+    python simulations/sim_biogas_digestion.py --plot     # also saves outputs/biogas_digestion.png
 """
+import sys
+from pathlib import Path
 
 import numpy as np
 from scipy.integrate import solve_ivp
-import matplotlib.pyplot as plt
 
 def biogas_ode(t, y, params):
     """
@@ -61,19 +69,27 @@ CH4_total = sol.y[1]
 N_digestate = sol.y[2]
 Temp = sol.y[3]
 
-print("=== Biogas Simulation Results (30 days) ===")
+print("=== Biogas Simulation Results (30 days) [SIM] ===")
 print(f"Total methane produced: {CH4_total[-1]:.2f} m³")
 print(f"Energy from methane: {CH4_total[-1] * 6.0:.1f} kWh")  # ~6 kWh per m³ CH4
 print(f"Final digestate nitrogen: {N_digestate[-1]:.2f} kg N")
 print(f"Average daily methane: {CH4_total[-1]/30:.3f} m³/day")
 
-# Optional plot (uncomment to visualize)
-# plt.figure(figsize=(10,6))
-# plt.plot(days, CH4_total, label='Cumulative Methane (m³)')
-# plt.plot(days, N_digestate, label='Digestate N (kg)')
-# plt.xlabel('Days')
-# plt.ylabel('Value')
-# plt.legend()
-# plt.title('EcoForge Biogas Digestion Simulation')
-# plt.grid(True)
-# plt.show()
+# Optional plot (pass --plot to save a PNG; never blocks)
+if "--plot" in sys.argv:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(10, 6))
+    plt.plot(days, CH4_total, label='Cumulative Methane (m³)')
+    plt.plot(days, N_digestate, label='Digestate N (kg)')
+    plt.xlabel('Days')
+    plt.ylabel('Value')
+    plt.legend()
+    plt.title('EcoForge Biogas Digestion SIM')
+    plt.grid(True)
+    out = Path("outputs") / "biogas_digestion.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out)
+    plt.close()
+    print(f"Plot saved to {out}")

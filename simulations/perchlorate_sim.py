@@ -1,5 +1,9 @@
-import numpy as np
+import os
+
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 
 perch_levels = [0, 0.1, 0.5, 1.0]
 yield_reduction = [0, 10, 40, 70]
@@ -22,7 +26,9 @@ plt.ylabel('Relative Yield (%)')
 plt.title('EcoForge Perchlorate Tolerance Simulation')
 plt.legend()
 plt.grid(True)
-plt.savefig('perch_plot.png')
+os.makedirs('outputs', exist_ok=True)
+plt.savefig(os.path.join('outputs', 'perch_plot.png'))
 plt.close()
 
 print("Month 6 Yield at 0.5%:", round(curves[0.5][6], 2))
+print("Plot saved to outputs/perch_plot.png")

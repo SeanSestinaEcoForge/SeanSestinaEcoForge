@@ -1,48 +1,34 @@
-## ⚠️ IMPORTANT SAFETY & LIABILITY DISCLAIMER
-
-**EcoForge designs, simulations, blueprints, code, BOMs, and all materials are provided "AS IS" and "WITH ALL FAULTS" for experimental, educational, and open-source research purposes only.**
-
-Building or operating any EcoForge system (vermiponics, biogas digester, RO unit, solar/Powerwall integration, shipping container mods, sensors, etc.) involves **serious risks** including but not limited to:
-- Fire or explosion (biogas/methane)
-- Electrical shock or arc flash
-- Chemical exposure or burns
-- Biological hazards (pathogens, ammonia)
-- Structural failure
-- Flooding or system leaks
-- Injury or property damage
-
-**You assume 100% of the risk.**  
-We make **no warranties** whatsoever (express or implied) about safety, performance, accuracy of simulations, or fitness for any purpose. Real-world results may differ from sims.
-
-Always:
-- Consult licensed engineers, electricians, plumbers, and local authorities
-- Comply with all building, environmental, electrical, and safety codes
-- Get proper permits and inspections
-- Start small and test safely
-
-**Neither Sean Sestina, EcoForge, contributors, nor any affiliates shall be liable** for any damages, injuries, losses, claims, or liabilities arising from the use of this material.
-
-Prototype and build **at your own risk only**. Not for commercial replication without independent professional review and certification.
-
-Read the full LICENSE (MIT) and CONTRIBUTING.md for additional terms.
-    
 """
-aquaponics_vermiponics_enhanced_ph_alk.py - EcoForge
+aquaponics_vermiponics_enhanced_ph_alk.py - EcoForge (SIM, teaching model)
+
 Enhanced aquaponics model with:
 - Temperature dependence (Q10 scaling)
 - Dissolved oxygen dynamics & crash thresholds
-- Vermicomposting: organic solids decay → ammonia release
-- Added alkalinity dynamics and pH approximation with effects on nitrification
+- Vermicomposting: organic solids decay -> ammonia release
+- Alkalinity dynamics and a rough pH approximation with effects on nitrification
 
-Run:
-    pip install -r ../requirements.txt
-    python aquaponics_vermiponics_enhanced_ph_alk.py
+Labels: every output is SIM. Parameters are ASSUME example values for a 200 L
+bench system, not MEASURED. The pH-from-alkalinity line is a rough linear
+ASSUME approximation that ignores CO2/carbonate equilibrium; do not use it to
+manage real fish. The tested garage-pilot model lives in ``api/``.
+
+Safety: provided AS IS for experimental, educational, open-source research only.
+Building or operating any EcoForge system carries serious risks (electrical,
+biogas fire/explosion, chemical, biological, structural, flooding). You assume
+100% of the risk. See DISCLAIMER.md and LICENSE (MIT) in the repository root.
+
+Run (from the repository root):
+    pip install -r requirements.txt
+    python simulations/aquaponics_vermiponics_enhanced_ph_alk.py            # prints finals, saves PNG
+    python simulations/aquaponics_vermiponics_enhanced_ph_alk.py --show     # also open a plot window
 
 Tune params (e.g. T, k_worm_base, k_reaer) to match your real system.
 """
+import argparse
+from pathlib import Path
+
 import numpy as np
 from scipy.integrate import odeint
-import matplotlib.pyplot as plt
 
 # Enhanced Aquaponics + Vermiponics Simulation
 # States:
@@ -54,6 +40,14 @@ import matplotlib.pyplot as plt
 # y[5] = S   Organic solids in media (mg/L as N equivalent)
 # y[6] = DO  Dissolved oxygen (mg/L)
 # y[7] = Alk Alkalinity (mg/L CaCO3)
+
+DEFAULT_OUTPUT = Path("outputs") / "aquaponics_vermiponics_enhanced_ph_alk.png"
+
+
+def approx_pH(alk):
+    """ASSUME: rough linear pH from alkalinity (mg/L CaCO3). Toy only."""
+    return 6.2 + (alk / 100.0) * 0.6
+
 
 def aquaponics_vermiponics_model(y, t, params):
     F, P, A, I, N, S, DO, Alk = y
@@ -68,7 +62,7 @@ def aquaponics_vermiponics_model(y, t, params):
     Q = Q10 ** ((T - 20.0) / 10.0)
     
     # Approximate pH from alkalinity (rough linear approximation)
-    pH = 6.2 + (Alk / 100.0) * 0.6
+    pH = approx_pH(Alk)
     
     # pH factor for nitrification (decreases below pH 7.5, zero at 5.5)
     pH_fact = max(0.0, min(1.0, (pH - 5.5) / 2.0))
@@ -111,8 +105,8 @@ def aquaponics_vermiponics_model(y, t, params):
     
     return [dF_dt, dP_dt, dA_dt, dI_dt, dN_dt, dS_dt, dDO_dt, dAlk_dt]
 
-# Example parameters (200 L system, ~20 °C base)
-params = [
+# Example parameters (ASSUME; 200 L system, ~20 °C base)
+PARAMS = [
     200.0,      # V: volume (L)
     22.0,       # T: temperature (°C) — you can make this time-dependent later
     2.5,        # Q10: temperature sensitivity factor
@@ -141,52 +135,92 @@ params = [
     3.57        # alk_add_uptake: alkalinity addition from plant nitrate uptake (mg CaCO3/mg N)
 ]
 
-# Initial conditions
-y0 = [1.2, 0.8, 0.1, 0.0, 8.0, 5.0, 7.5, 150.0]  # added initial Alk=150 mg/L
+# Initial conditions (ASSUME example): added initial Alk=150 mg/L
+Y0 = [1.2, 0.8, 0.1, 0.0, 8.0, 5.0, 7.5, 150.0]
+TEMPERATURE_INDEX = 1
 
-# Simulate 120 days
-t = np.linspace(0, 120, 1200)
 
-# Solve
-solution = odeint(aquaponics_vermiponics_model, y0, t, args=(params,))
+def run_simulation(temperature=None, days=120, points_per_day=10):
+    """Solve the model and return a dict of numpy arrays (all SIM).
 
-F, P, A, I, N, S, DO, Alk = solution.T
+    temperature: water temperature in deg C (default: the PARAMS value, 22 C).
+    days: simulated horizon in days.
+    """
+    params = list(PARAMS)
+    if temperature is not None:
+        params[TEMPERATURE_INDEX] = float(temperature)
+    t = np.linspace(0, days, int(days * points_per_day))
+    solution = odeint(aquaponics_vermiponics_model, Y0, t, args=(params,))
+    F, P, A, I, N, S, DO, Alk = solution.T
+    return {
+        "t": t, "fish": F, "plants": P, "ammonia": A, "nitrite": I,
+        "nitrate": N, "solids": S, "DO": DO, "alkalinity": Alk,
+        "pH_approx": approx_pH(Alk), "temperature": params[TEMPERATURE_INDEX],
+    }
 
-# Approximate pH for plotting
-pH_approx = 6.2 + (Alk / 100.0) * 0.6
 
-# Plotting
-fig, axs = plt.subplots(5, 1, figsize=(11, 16), sharex=True)
-fig.suptitle('Enhanced Aquaponics + Vermiponics Simulation with pH/Alkalinity (120 days)')
+def plot_results(r, path=None, show=False):
+    import matplotlib
+    if not show:
+        matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
 
-axs[0].plot(t, F, label='Fish biomass (kg)')
-axs[0].plot(t, P, label='Plant biomass (kg)')
-axs[0].legend(); axs[0].set_ylabel('Biomass')
+    t = r["t"]
+    fig, axs = plt.subplots(5, 1, figsize=(11, 16), sharex=True)
+    fig.suptitle('Enhanced Aquaponics + Vermiponics SIM with pH/Alkalinity (120 days)')
 
-axs[1].plot(t, A, label='Ammonia-N'); axs[1].plot(t, I, label='Nitrite-N')
-axs[1].plot(t, N, label='Nitrate-N'); axs[1].plot(t, S, label='Organic solids')
-axs[1].legend(); axs[1].set_ylabel('Nutrients / Solids (mg/L)')
+    axs[0].plot(t, r["fish"], label='Fish biomass (kg)')
+    axs[0].plot(t, r["plants"], label='Plant biomass (kg)')
+    axs[0].legend(); axs[0].set_ylabel('Biomass')
 
-axs[2].plot(t, DO, 'tab:cyan', label='Dissolved Oxygen (mg/L)')
-axs[2].axhline(4.0, color='red', ls='--', alpha=0.6, label='Critical DO')
-axs[2].legend(); axs[2].set_ylabel('DO (mg/L)')
+    axs[1].plot(t, r["ammonia"], label='Ammonia-N'); axs[1].plot(t, r["nitrite"], label='Nitrite-N')
+    axs[1].plot(t, r["nitrate"], label='Nitrate-N'); axs[1].plot(t, r["solids"], label='Organic solids')
+    axs[1].legend(); axs[1].set_ylabel('Nutrients / Solids (mg/L)')
 
-axs[3].plot(t, Alk, label='Alkalinity (mg/L CaCO3)')
-axs[3].legend(); axs[3].set_ylabel('Alkalinity')
+    axs[2].plot(t, r["DO"], 'tab:cyan', label='Dissolved Oxygen (mg/L)')
+    axs[2].axhline(4.0, color='red', ls='--', alpha=0.6, label='Critical DO')
+    axs[2].legend(); axs[2].set_ylabel('DO (mg/L)')
 
-axs[4].plot(t, pH_approx, label='Approx pH', color='purple')
-axs[4].legend(); axs[4].set_ylabel('pH')
-axs[4].set_xlabel('Time (days)')
+    axs[3].plot(t, r["alkalinity"], label='Alkalinity (mg/L CaCO3)')
+    axs[3].legend(); axs[3].set_ylabel('Alkalinity')
 
-plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.show()
+    axs[4].plot(t, r["pH_approx"], label='Approx pH (ASSUME toy)', color='purple')
+    axs[4].legend(); axs[4].set_ylabel('pH')
+    axs[4].set_xlabel('Time (days)')
 
-# Quick stats at end
-print(f"Final values (day {t[-1]:.0f}):")
-print(f"  Fish: {F[-1]:.2f} kg")
-print(f"  Plants: {P[-1]:.2f} kg")
-print(f"  Nitrate: {N[-1]:.1f} mg/L")
-print(f"  DO: {DO[-1]:.1f} mg/L")
-print(f"  Organic solids: {S[-1]:.1f} mg/L")
-print(f"  Alkalinity: {Alk[-1]:.1f} mg/L")
-print(f"  Approx pH: {pH_approx[-1]:.1f}")
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
+    if path:
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(path)
+    if show:
+        plt.show()
+    plt.close(fig)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="EcoForge enhanced aquaponics + vermiponics SIM")
+    parser.add_argument("--days", type=float, default=120)
+    parser.add_argument("--temperature", type=float, default=None, help="water temperature, deg C")
+    parser.add_argument("--out", default=str(DEFAULT_OUTPUT), help="PNG path ('' to skip saving)")
+    parser.add_argument("--show", action="store_true", help="open an interactive plot window")
+    args = parser.parse_args(argv)
+
+    r = run_simulation(temperature=args.temperature, days=args.days)
+    t = r["t"]
+    print(f"Final values (day {t[-1]:.0f}) [SIM]:")
+    print(f"  Fish: {r['fish'][-1]:.2f} kg")
+    print(f"  Plants: {r['plants'][-1]:.2f} kg")
+    print(f"  Nitrate: {r['nitrate'][-1]:.1f} mg/L")
+    print(f"  DO: {r['DO'][-1]:.1f} mg/L")
+    print(f"  Organic solids: {r['solids'][-1]:.1f} mg/L")
+    print(f"  Alkalinity: {r['alkalinity'][-1]:.1f} mg/L")
+    print(f"  Approx pH: {r['pH_approx'][-1]:.1f}")
+
+    plot_results(r, path=args.out or None, show=args.show)
+    if args.out:
+        print(f"Plot saved to {args.out}")
+
+
+if __name__ == "__main__":
+    main()
