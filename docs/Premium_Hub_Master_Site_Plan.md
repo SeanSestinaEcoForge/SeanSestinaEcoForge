@@ -1,5 +1,7 @@
 # EcoForge Premium Hub Master Site Plan
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.0 – March 22, 2026
 
 **Purpose**: Official master layout for the 25-acre flagship Engineering Hub & Base Center — the central command, R&D nucleus, and launchpad for all future EcoForge projects.

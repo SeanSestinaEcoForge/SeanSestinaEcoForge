@@ -1,5 +1,7 @@
 # EcoForge Weekly Operating Rhythm & Maintenance Checklist
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.6 – March 22, 2026
 
 **Purpose**: Mid-level cadence for 1–2 operators to tune, maintain, and optimize the system weekly. Prevents small issues from compounding, builds momentum toward monthly goals, and ensures data/trends are captured. Scalable from Container 1 to Premium Hub nodes.

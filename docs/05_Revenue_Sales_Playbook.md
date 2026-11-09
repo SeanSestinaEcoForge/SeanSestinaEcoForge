@@ -1,5 +1,7 @@
 # EcoForge Revenue & Sales Playbook
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.0 – March 22, 2026
 
 **Purpose**: Practical guide to turn true excess production into steady cash flow while keeping 80–90% for internal abundance. Designed for Container 1 and scalable to the Premium Hub. Focus on low-effort, realistic channels first.

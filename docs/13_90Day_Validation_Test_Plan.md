@@ -1,10 +1,12 @@
 # EcoForge Container 1 – 90-Day Validation Test Plan
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.0 – March 22, 2026  
 **Status**: Locked core document in Master Archive v1.6
 
 **Objective**  
-Run a 90-day continuous test on Danny’s Container 1 to prove the core loop under real conditions, collect verifiable data, and validate minimum viability for self-funding expansion. Designed for 1–2 operators.
+Run a 90-day continuous test on Container 1 (family land) to prove the core loop under real conditions, collect verifiable data, and validate minimum viability for self-funding expansion. Designed for 1–2 operators.
 
 ### 1. Pre-Test Setup (Days –14 to 0)
 **Required**  

@@ -1,5 +1,7 @@
 # ForgeHub – EcoForge Closed-Loop Sensor Dashboard & API
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version:** 1.0 (March 2026)  
 **Status:** Design Phase – Ready for React/FastAPI build once API credits + Container 1 site confirmed  
 **Core Principle:** True closed-loop integration. Every subsystem talks to every other. pH + all water chemistry parameters monitored across vermiponics, RO, biogas, and energy systems. Grok reasons holistically; Ara speaks the unified story.
@@ -37,9 +39,9 @@
 
 ## Next Steps
 1. Credits top-up  
-2. Dad/Danny site confirmation  
+2. Family site confirmation  
 3. Build MVP dashboard  
-4. Bridget review  
+4. Family plants/media review  
 
 **This is the brain that ties EcoForge together.** One dashboard. One voice. One closed loop.
 

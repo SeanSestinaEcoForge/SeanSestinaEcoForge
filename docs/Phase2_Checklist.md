@@ -1,4 +1,6 @@
-# Phase 2: Physical Container Node Forge (Cambridge I-70/I-77 Pilot)
+# Phase 2: Physical Container Node Forge (Family-Land Pilot)
+
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
 
 ## Goal
 Deploy the first quick-deploy 20ft shipping container homestead node with active vermiponics (vermi reactor), RO greywater recycling, basic biogas stub, solar baseline, and live Grok/ESP32 monitoring.  
@@ -6,7 +8,7 @@ Deploy the first quick-deploy 20ft shipping container homestead node with active
 
 **Dependencies**  
 - Phase 1 complete (blueprints v3 locked, simulations validated, Master-BOM sourced).  
-- Site access secured (Cambridge crossroads lease/handshake with Danny/Dad or equivalent).  
+- Site access secured (family-land agreement or equivalent).  
 - 20ft used shipping container acquired and basic treasury/funding green (bootstrap fallback: personal/family/tools).  
 - All materials cross-referenced from Master-BOM-All-Tiers.md.
 

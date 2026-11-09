@@ -1,5 +1,7 @@
 # EcoForge Scientific Paper
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Title**  
 Hybrid Aquaponics–Vermiponics–Biofloc System for Closed-Loop Off-Grid Abundance and Bioregenerative Life Support Analogs: Design, Performance, and Implications for Mars ECLSS  
 

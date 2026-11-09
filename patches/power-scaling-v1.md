@@ -1,5 +1,7 @@
 ## Power Scaling Patch v1: Turbine Gang Integration
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Purpose**  
 Add resilient, scalable micro gas turbines (MGTs) for peak loads, outages, and grid independence, inspired by xAI's aggregated "gang" approach for rapid deployment and redundancy.
 
@@ -24,7 +26,7 @@ Add resilient, scalable micro gas turbines (MGTs) for peak loads, outages, and g
 - Gang modularity ideal for Starship-delivered clusters  
 - Practice for 300 MW+ colony power scaling
 
-**Key Specs (Cambridge, OH context)**  
+**Key Specs (Ohio context)**  
 - Units: 1–4 × 5–10 kW MGTs (e.g., Capstone-style or biodiesel-modified)  
 - Margins: +30–40% for cooling/networking/hiccups  
 - Fuel use: ~3–4 gal LP/hour at full 10 kW load  
@@ -46,5 +48,5 @@ Add resilient, scalable micro gas turbines (MGTs) for peak loads, outages, and g
 
 **Next Steps**  
 - Prototype single 5–10 kW unit mount & test  
-- Simulate full gang in Cambridge summer peak conditions  
+- Simulate full gang in Ohio summer peak conditions  
 - Document biodiesel conversion recipe

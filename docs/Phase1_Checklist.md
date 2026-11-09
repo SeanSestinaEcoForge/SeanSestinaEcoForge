@@ -1,5 +1,7 @@
 # Phase 1: Digital Foundation & Simulation Forge (✅ Completed / In Final Polish)
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 ## Goal
 Lock in all blueprints, simulations, API endpoints, Grok/Ara integration plans, and open-source readiness **before** any physical container build.  
 Create a fully documented, forkable, Grok-accelerated foundation that proves 95–96.5% resource recovery on paper (and in sims) for both Earth homesteads and Mars analogs.
@@ -51,7 +53,7 @@ Create a fully documented, forkable, Grok-accelerated foundation that proves 95�
 - [ ] Draft initial X thread templates announcing the repo (with disclaimer call-out)
 - [ ] Create onboarding guide for new contributors (fork → run sim → suggest improvements)
 - [ ] Document Phase 1 completion evidence (screenshots of running sims/API)
-- [ ] Prepare pitch for land scouts / family (Cambridge I-70/I-77 node context)
+- [ ] Prepare pitch for land scouts / family (family-land node context)
 
 ## Status & Notes (March 2026)
 - **Overall Phase 1 Status:** Largely Complete — Blueprints locked, sims/API live, disclaimers armored.

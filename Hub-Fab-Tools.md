@@ -1,5 +1,7 @@
 # Engineering Production Hub – Fab Tools & Replication (EcoForge)
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](README.md) · [November 2026 update](progress/2026-11-update.md).
+
 This file details the fab tools integrated into the 40×60 ft workshop hub. These enable in-house production of custom parts for the next container/node or homestead build — closing the loop on self-replication.
 
 ## Key Fab Tools (2026 Pricing & Purpose)

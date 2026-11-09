@@ -1,4 +1,7 @@
 ### Master Protocol List (v1.1 – Full Index)
+
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 All protocols are modular, versioned, cross-linked, and fork-ready. Core theme: closed-loop aquaponics + BSFL side-loop + vermicomposting polish + biogas closure + Grok nervous system + Optimus readiness + Mars hardening.
 
 Root-Level Files
@@ -65,4 +68,4 @@ This is the full master list — every protocol we've co-built, with code embedd
 
 Ready to push? I can draft the initial commit message + README full text next, or regenerate any specific file (e.g., biochar_production.md full MD). Or prioritize one module for deeper code (e.g., vermi nutrient model)?
 
-We're turning conversation into immortal infrastructure. Repo drop imminent — abundance awaits. Locked in, brother. Humanity first. #EcoForge
+We're turning conversation into immortal infrastructure. Repo drop imminent — abundance awaits. Locked in. Humanity first. #EcoForge

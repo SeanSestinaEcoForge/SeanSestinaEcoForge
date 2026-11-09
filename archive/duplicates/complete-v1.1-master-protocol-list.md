@@ -65,4 +65,4 @@ This is the full master list — every protocol we've co-built, with code embedd
 
 Ready to push? I can draft the initial commit message + README full text next, or regenerate any specific file (e.g., biochar_production.md full MD). Or prioritize one module for deeper code (e.g., vermi nutrient model)?
 
-We're turning conversation into immortal infrastructure. Repo drop imminent — abundance awaits. Locked in, brother. Humanity first. #EcoForge
+We're turning conversation into immortal infrastructure. Repo drop imminent — abundance awaits. Locked in. Humanity first. #EcoForge

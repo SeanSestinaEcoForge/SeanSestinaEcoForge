@@ -1,5 +1,7 @@
 # EcoForge Project Master Blueprint & Executive Summary
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.0 – March 22, 2026
 
 **Vision**  
@@ -19,7 +21,7 @@ Build sovereign, off-grid abundance engines starting with modular 40ft ISO conta
 - Mars Bay: ECLSS mocks with low-pressure CO₂ trials and regolith analogs
 
 **Phased Path**  
-1. Container 1 ignition (Danny’s node)  
+1. Container 1 ignition (family-land node)  
 2. Premium Hub build (25-acre flagship)  
 3. Organic cluster replication (self-funded)
 
@@ -29,7 +31,7 @@ Build sovereign, off-grid abundance engines starting with modular 40ft ISO conta
 - Monthly cash revenue potential (realistic): $850–$11,000
 
 **Next Steps**  
-Drop Danny’s site intel to customize Container 1 for immediate ignition.
+Gather family-land site details to customize Container 1 for immediate ignition.
 
 **Archive Retrieval**  
 All documents are cross-referenced in the Master Reference List (Document #0).

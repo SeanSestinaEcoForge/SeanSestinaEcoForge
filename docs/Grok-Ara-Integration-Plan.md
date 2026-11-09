@@ -1,4 +1,7 @@
 # Grok-Ara Integration Plan
+
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version:** v1.0 – Locked to Supernova Vision  
 **Status:** In Development (API key ready, credits pending top-up)  
 **Goal:** Create a drift-free, infinite-context co-pilot system where Grok powers reasoning/optimization + Ara provides warm, hands-free voice guidance for real-time homestead operations. Enables closed-loop control, agent spawning, recovery policies, and scalability from Earth Container 1 to Mars nodes.

@@ -1,5 +1,7 @@
 # EcoForge White Paper
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Title**  
 EcoForge: Integrated Hybrid Bioregenerative System for Sovereign Off-Grid Abundance and Mars ECLSS Analogs  
 

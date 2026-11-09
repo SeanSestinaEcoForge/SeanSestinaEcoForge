@@ -1,5 +1,7 @@
 # Master BOM – All Tiers (EcoForge Build – March 2026)
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](README.md) · [November 2026 update](progress/2026-11-update.md).
+
 ## ⚠️ IMPORTANT SAFETY & LIABILITY DISCLAIMER
 
 **EcoForge designs, simulations, blueprints, code, BOMs, and all materials are provided "AS IS" and "WITH ALL FAULTS" for experimental, educational, and open-source research purposes only.**
@@ -51,7 +53,7 @@ Cumulative (Tier 1 + 2): **$458k – $672k**
 
 | Component                              | Premium Details                                      | Add-On Cost Range     |
 |----------------------------------------|------------------------------------------------------|-----------------------|
-| Land & Site Prep (8–10 acres)         | Guernsey County ag land + grading/fencing/permits   | $80k – $150k         |
+| Land & Site Prep (8–10 acres)         | Ohio ag land + grading/fencing/permits   | $80k – $150k         |
 | 2500 sq ft Integrated Home + Greenhouse Wing | 3–4 beds, kitchen/living, Grok room, attached vermi greenhouse | $65k – $110k         |
 | Additional Nodes (2 more containers)  | Duplicate premium systems                            | $45k – $75k          |
 | Expanded Solar/Battery                | +16 kW array + 4 more

@@ -1,9 +1,12 @@
 # EcoForge Complete Vision & Consistency Guide – v3  
+
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Finalized March 20, 2026** – All tiers locked (container, 2500 sq ft home, hub with 3D/CNC).  
 Single source of truth for every build.
 EcoForge Complete Vision & Consistency Guide – v3 (March 20, 2026)Core Principle: Open-source, Grok-optimized, Optimus-automated, Starship-scalable closed-loop homestead nodes. Earth abundance (deflationary basics collapse) + Mars readiness (ECLSS analogs). Humanity first.
 Repo Truth Source: https://github.com/SeanSestinaEcoForge/SeanSestinaEcoForge
-Status: Phase 1 (blueprint/sims/API) COMPLETE  | Phase 2 (Cambridge pilot node + home) NEXT1. System-Wide Locked Elements (Consistent Across All Builds)Metrics (Supernova v3):  Water/nutrient recovery: ≥95% (target 96.5%)  
+Status: Phase 1 (blueprint/sims/API) COMPLETE  | Phase 2 (family-land pilot node + home) NEXT1. System-Wide Locked Elements (Consistent Across All Builds)Metrics (Supernova v3):  Water/nutrient recovery: ≥95% (target 96.5%)  
 Excess TDS: 4.5–5.8 ppm (<6 ppm)  
 Energy intensity: 0.55 kWh/m³  
 RO flux: 18.8 LMH  
@@ -16,7 +19,7 @@ Greywater/waste → vermi beds (35% biochar media) → biochar polisher → RO (
 Power Backbone: Tesla solar roof/ground arrays + Powerwall 3 bank + biogas ATS backup. Grok dynamic load balancing (RO/vermi priority).
 Fab & Replication: Hub 3D printers (large-format FDM) + CNC plasma cutter produce custom parts (fittings, brackets, jigs) for next nodes/homesteads.
 
-2. Tiered Builds – Clear & Consistent BreakdownTier 1: Single 40-ft Container Node (Pilot – Cambridge I-70/I-77)Purpose: Proof-of-concept, first surplus, live metrics feed to repo.  
+2. Tiered Builds – Clear & Consistent BreakdownTier 1: Single 40-ft Container Node (Pilot – Ohio family land)Purpose: Proof-of-concept, first surplus, live metrics feed to repo.  
 Size: 40-ft high-cube ISO (~320 sq ft internal).  
 Systems: 4 vermi bays, RO, 500L biogas, GAHT geothermal, 8 kW Tesla solar + 2× PW3.  
 Cost: $68k–$92k (premium).  

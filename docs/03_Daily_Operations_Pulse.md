@@ -1,5 +1,7 @@
 # EcoForge Daily Standup & Quick Operations Checklist
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.6 – March 22, 2026
 
 **Purpose**: Fast, 5–10 minute daily pulse for 1 operator to confirm system stability, catch early drifts, and log essentials. Designed as a "standup" ritual — scan, tweak, record, move on. Foundation for weekly trends and monthly reviews. Scalable from Container 1 solo op to multi-node hubs.

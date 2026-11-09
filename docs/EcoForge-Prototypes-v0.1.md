@@ -1,9 +1,11 @@
 # EcoForge Prototypes – v0.1 (March 20, 2026)
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 This file catalogs current, queued, and future physical prototypes to validate, iterate, and scale the closed-loop system. All prototypes tie back to the core vision: vermiponics + RO + biogas + solar/Powerwall + geothermal + Grok agents.
 
 ## Current / Queued Prototypes
-1. **Cambridge Pilot Node (Tier 1 – 40-ft Container)**  
+1. **Family-Land Pilot Node (Tier 1 – 40-ft Container)**  
    - Status: Queued (Phase 2 ignition after baseline land/house sale).  
    - Goal: First full closed-loop flow (400 lbs/mo surplus, 96.5% recovery, <6 ppm TDS, +16 kWh/day net).  
    - Key validation: Real metrics logged to repo (/simulate endpoint + MQTT heartbeat).  

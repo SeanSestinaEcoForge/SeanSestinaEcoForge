@@ -1,3 +1,5 @@
+> **IDEA (pre-Nov 2026 concept sketch).** Layout and equipment sizes are design ideas, not built or MEASURED. Current status: [README](../README.md).
+
 EcoForge 8–10 Acre Homestead Ecosystem Layout (South at bottom)
 
           [Engineering Production Hub – 40×60 ft Workshop]

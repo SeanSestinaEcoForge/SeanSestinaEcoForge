@@ -1,5 +1,7 @@
 # EcoForge Monitoring Spreadsheet Template
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Version**: 1.0 – March 22, 2026  
 **Status**: Locked core document in Master Archive v1.6
 
@@ -63,7 +65,7 @@ Simple, daily-use spreadsheet template for 1–2 operators to log all critical p
 Columns: Date | Issue | Parameter | Action | Resolution Date | Resolved? (Y/N)
 
 **Implementation Tips**  
-- Use Google Sheets for sharing with Danny  
+- Use Google Sheets for sharing with the site lead  
 - Conditional formatting: Red if ammonia >0.5, DO <5, etc.  
 - Add photos: Hyperlink column to images of fish, plants, floc  
 - Backup: Export to PDF weekly  

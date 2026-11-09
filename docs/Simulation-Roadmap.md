@@ -1,5 +1,7 @@
 # EcoForge Simulation Roadmap (March 2026)
 
+> **Archived / superseded (pre-Nov 2026).** This document predates the November 2026 honesty pass. Revenue, ROI, yield, recovery, energy and "validated / locked / complete" statements in it are historical plans and assumptions (ASSUME / IDEA), **not MEASURED results** — no EcoForge node has operated yet. Current status: [README](../README.md) · [November 2026 update](../progress/2026-11-update.md).
+
 **Goal:** Single source of truth for all simulations. Track what is built, validated, and prioritized for Phase 2 container builds and Mars analogs.
 
 ## 1. Simulations Already Built & Run
