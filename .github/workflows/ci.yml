@@ -6,28 +6,67 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      MPLBACKEND: Agg          # non-interactive plots; nothing blocks on a window
+      PYTHONUNBUFFERED: "1"
     steps:
     - uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'  # or match your local
+        python-version: '3.12'
+        cache: pip
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        pip install flake8 pylint black ruff
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install flake8
 
-    - name: Lint with flake8
-      run: flake8 . --count --max-line-length=120 --ignore=E203,W503 --exclude=.git,__pycache__,venv,*.ipynb --statistics || true  # || true = don't fail job on warnings
+    - name: Lint (syntax errors and undefined names fail the build)
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
-    - name: Lint with pylint
-      run: pylint --disable=missing-docstring,invalid-name --max-line-length=120 simulations/ src/ *.py || true
+    - name: Byte-compile every Python file
+      run: python -m compileall -q api src simulations tests tools examples archive throttles.py
 
-    - name: Format check with black
-      run: black --check --diff . || true
+    - name: Quick Start smoke run (README commands, verbatim)
+      run: |
+        timeout 120 python simulations/aquaponics_vermiponics_enhanced_ph_alk.py
+        timeout 120 python simulations/sim_biogas_digestion.py
+
+    - name: Other simulations smoke run
+      run: |
+        for script in aquaponics_nutrient_cycle energy_basic fouling_sim perchlorate_sim space_solar param_sweep_example; do
+          echo "::group::simulations/$script.py"
+          timeout 120 python simulations/$script.py
+          echo "::endgroup::"
+        done
+        timeout 60 python src/tools/energy.py
+
+    - name: Sensor logger stub terminates
+      run: timeout 30 python -m src.tools.grok_esp32_logger_stub --cycles 2 --interval 0
+
+    - name: Optional Grok helpers fail cleanly without the SDK
+      run: |
+        for script in src/grok_decision_stub.py src/core/xai_client.py src/tools/examples/simple_grok_chat.py examples/tool_calling_demo.py; do
+          set +e
+          timeout 30 python "$script"
+          code=$?
+          set -e
+          if [ "$code" -ne 2 ]; then echo "$script exited $code (expected clean exit 2)"; exit 1; fi
+        done
+
+    - name: Pytest (pilot API)
+      run: python -m pytest -q
+
+    - name: Loopback HTTP smoke test (pilot API)
+      run: timeout 120 python tools/smoke_local.py
