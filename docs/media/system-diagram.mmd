@@ -1,0 +1,54 @@
+flowchart TB
+  classDef bio fill:#e8f5e9,stroke:#2e7d32,color:#1b3a1e
+  classDef water fill:#e3f2fd,stroke:#1565c0,color:#0d2a4a
+  classDef energy fill:#fff8e1,stroke:#ef8f00,color:#4a3000
+  classDef digital fill:#ede7f6,stroke:#5e35b1,color:#2a1650
+  classDef human fill:#fce4ec,stroke:#ad1457,color:#4a0c25
+  classDef idea fill:#f5f5f5,stroke:#9e9e9e,color:#555,stroke-dasharray: 5 4
+
+  subgraph INPUTS["Inputs"]
+    direction LR
+    RAIN["Rain make-up water<br/>attended top-up, lab test first"]:::water
+    RO["RO unit<br/>backup only"]:::water
+    GRID["20 A garage circuit<br/>after electrical safety check"]:::energy
+    BACKUP["Backup power<br/>keeps aeration + circulation on"]:::energy
+    SOLAR["Solar<br/>IDEA: optional, off by default"]:::idea
+  end
+
+  subgraph LOOP["Garage pilot loop (design; not wet yet)"]
+    direction LR
+    FISH["Fish tank<br/>10 comet goldfish (plan)"]:::bio
+    SETTLER["Settler + fines bag<br/>captures solids"]:::water
+    MBBR["K1 MBBR biofilter<br/>ammonia → nitrite → nitrate"]:::bio
+    DWC["Raised DWC plant beds<br/>plants take up nitrate"]:::bio
+    SUMP["Sump<br/>cleaned water"]:::water
+    WORMS["Worm bins (side stream)<br/>solids → castings, no leachate return"]:::bio
+    FISH -- "waste + ammonia" --> SETTLER --> MBBR -- "nutrients" --> DWC --> SUMP
+    SUMP -- "one pump: clean water back" --> FISH
+    SETTLER -- "dewatered sludge" --> WORMS
+  end
+
+  subgraph SOFTWARE["Software in this repo (SIM today)"]
+    direction LR
+    SENSORS["Sensors: pH, DO, temp, levels<br/>today: tools/fake_sensor.py (SIM)"]:::digital
+    API["Pilot API<br/>POST /telemetry + heartbeat check"]:::digital
+    ADVISOR["Grok advisor<br/>MOCK rules or LIVE Grok"]:::digital
+    SAFETY["Safety layer<br/>clamps / blocks, logs why"]:::digital
+    DASH["Dashboard<br/>GET /dashboard"]:::digital
+    SENSORS -- "5-min heartbeat" --> API --> ADVISOR --> SAFETY --> DASH
+  end
+
+  HUMAN["Human decides and acts<br/>software never actuates"]:::human
+  MQTT["Real ESP32 sensors + MQTT bridge<br/>planned"]:::idea
+  NODE["40-ft high-cube node<br/>IDEA: after MEASURED pilot data"]:::idea
+
+  RAIN -.-> SUMP
+  RO -. "if needed" .-> SUMP
+  GRID -- "pump + air" --> SUMP
+  BACKUP -. "outage" .-> SUMP
+  SOLAR -.-> BACKUP
+  DWC -. "readings" .-> SENSORS
+  MQTT -.-> API
+  DASH --> HUMAN
+  HUMAN -. "manual feed, top-up, tests" .-> FISH
+  HUMAN -. "real data first" .-> NODE
